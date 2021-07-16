@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="Node.js 다운로드 페이지에 방문합니다.  패키지 관리자를 통한 Node.js 설치 를 선택합니다.  데비안과 우분투 기반... 을 선택합니다.  Debian and Ubuntu based distributions - Installation Instruction 탭에 이동하여 원하는 버전의 커맨드를 복사합니다. 저는 LTS버전인 v14.x를 선택하겠습니">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)">
+<meta property="og:url" content="https://jehwanyoo.net/2021/07/16/Ubuntu-Node-js-%EC%84%A4%EC%B9%98%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-n-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98%EA%B9%8C%EC%A7%80/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="Node.js 다운로드 페이지에 방문합니다.  패키지 관리자를 통한 Node.js 설치 를 선택합니다.  데비안과 우분투 기반... 을 선택합니다.  Debian and Ubuntu based distributions - Installation Instruction 탭에 이동하여 원하는 버전의 커맨드를 복사합니다. 저는 LTS버전인 v14.x를 선택하겠습니">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://i.ibb.co/FWr8dg4/Untitled.png">
+<meta property="og:image" content="https://i.ibb.co/JjN74Wr/Untitled-1.png">
+<meta property="og:image" content="https://i.ibb.co/f4JyXXg/Untitled-2.png">
+<meta property="og:image" content="https://i.ibb.co/SnV0kS5/Untitled-3.png">
+<meta property="og:image" content="https://i.ibb.co/pXJXV0x/Untitled-4.png">
+<meta property="og:image" content="https://i.ibb.co/LhSn8nb/Untitled-5.png">
+<meta property="og:image" content="https://i.ibb.co/TYqTMLT/Untitled-6.png">
+<meta property="og:image" content="https://i.ibb.co/qCCdQbf/Untitled-7.png">
+<meta property="article:published_time" content="2021-07-16T10:35:59.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:39:20.931Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="Ubuntu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/FWr8dg4/Untitled.png"> <link rel="canonical" href="https://jehwanyoo.net/2021/07/16/ubuntu-node-js-설치하고-관리하기-n-모듈-설치까지/"/> 
+<title>[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지) | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">7월 16, 2021&nbsp;&nbsp;19:35:59</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Node-js/">Node.js</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><a target="_blank" rel="noopener" href="https://nodejs.org/ko/download/">Node.js 다운로드</a> 페이지에 방문합니다.</p>
+<p><img src="https://i.ibb.co/FWr8dg4/Untitled.png" alt="download"></p>
+<p><code>패키지 관리자를 통한 Node.js 설치</code> 를 선택합니다.</p>
+<p><img src="https://i.ibb.co/JjN74Wr/Untitled-1.png" alt="Node.js Download - 2"></p>
+<p><code>데비안과 우분투 기반...</code> 을 선택합니다.</p>
+<p><img src="https://i.ibb.co/f4JyXXg/Untitled-2.png" alt="Node.js Download - 3"></p>
+<p><code>Debian and Ubuntu based distributions</code> - <code>Installation Instruction</code> 탭에 이동하여 원하는 버전의 커맨드를 복사합니다.</p>
+<p>저는 LTS버전인 v14.x를 선택하겠습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Using Ubuntu</span></span><br><span class="line">$ curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.ibb.co/SnV0kS5/Untitled-3.png" alt="Node.js Download - 4"></p>
+<p><code>node --version</code> 커맨드를 입력해보면 정상적으로 설치 되었음을 알 수 있습니다.</p>
+<h2 id="Node-js-버전-관리-및-전환"><a href="#Node-js-버전-관리-및-전환" class="headerlink" title="Node.js 버전 관리 및 전환"></a>Node.js 버전 관리 및 전환</h2><p><img src="https://i.ibb.co/pXJXV0x/Untitled-4.png" alt="Node.js Download - 5"></p>
+<p><code>n</code> 은 node.js 버전 관리를 매우 쉽게 만들어주는 프로그램입니다.</p>
+<p>n 패키지를 -g 플래그로 전역에 설치해도 되지만, 저 같은 경우 npx 커맨드를 선호하는 편입니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ npx n --lts</span><br><span class="line"></span><br><span class="line">npx: installed 1 <span class="keyword">in</span> 0.551s</span><br><span class="line">14.17.0</span><br></pre></td></tr></table></figure>
+
+<p>위 커맨드를 입력하면 현재 node.js의 lts 버전이 출력됩니다.</p>
+<p>lts 버전은 이미 설치했으니 latest 버전을 설치해봅시다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ npx n --latest</span><br><span class="line"></span><br><span class="line">npx: installed 1 <span class="keyword">in</span> 0.472s</span><br><span class="line">16.2.0</span><br><span class="line"></span><br><span class="line">$ sudo npx n latest</span><br></pre></td></tr></table></figure>
+
+<p>위 커맨드에서도 알 수 있듯이 <code>npx --name</code> 은 해당 버전 정보를 <code>npx name</code> 은 실제 설치를 진행합니다. 전역에 설치하기 때문에 만약 루트 권한이 없다면 sudo를 함께 사용합니다.</p>
+<p><img src="https://i.ibb.co/LhSn8nb/Untitled-5.png" alt="Node.js Download - 6"></p>
+<p>설치 직후에는 최근 설치 node로 alias되어 있습니다.</p>
+<p>설치된 node 목록을 확인해봅시다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npx n ls</span><br><span class="line"></span><br><span class="line">node/16.2.0</span><br></pre></td></tr></table></figure>
+
+<p>어라? LTS로 설치한 14버전이 없군요. 그렇습니다. n으로 설치된 버전만 리스트에 나오게 됩니다.</p>
+<p>따라서 이미 14버전을 설치하셨더라도 다시 한번 n으로 14버전을 설치해주세요. 그래야 버전 전환이 원할하겠죠.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npx n lts</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.ibb.co/TYqTMLT/Untitled-6.png" alt="Node.js Download - 7"></p>
+<p>전환하려면 n lts, n stable, n [version]등을 입력합니다. (이미 설치된 경우 다시 설치하지 않고 전환이 되는 원리입니다.)</p>
+<p>아니면, n 커맨드만 입력해서 방향키로 전환이 가능합니다.</p>
+<p><img src="https://i.ibb.co/qCCdQbf/Untitled-7.png" alt="Node.js Download - 8"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Node-js/"># Node.js</a>
+                    
+                        <a href="/tags/Ubuntu/"># Ubuntu</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/05/21/NPM%EC%97%90-%EC%9E%88%EB%8A%94-%EB%AA%A8%EB%93%88-%EB%A7%98%EB%8C%80%EB%A1%9C-%EC%8D%A8%EB%8F%84-%EB%90%A0%EA%B9%8C/">NPM에 있는 모듈 맘대로 써도 될까?</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

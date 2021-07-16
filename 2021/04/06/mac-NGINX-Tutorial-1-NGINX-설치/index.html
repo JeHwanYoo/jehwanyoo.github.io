@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="해당 튜토리얼를 시작하기 전에 brew 패키지 관리자가 설치되어 있는지 확인해주세요! (링크) NGINX 설치하기1brew install nginx  brew를 이용해 NginX를 설치해줍니다. nginx.conf 파일 경로 확인1brew info nginx  brew info ${패키지명}을 이용하면 해당 패키지가 어디에 설치되어 있는지 확인 할 수 있습">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(mac) NGINX Tutorial #1 - NGINX 설치">
+<meta property="og:url" content="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="해당 튜토리얼를 시작하기 전에 brew 패키지 관리자가 설치되어 있는지 확인해주세요! (링크) NGINX 설치하기1brew install nginx  brew를 이용해 NginX를 설치해줍니다. nginx.conf 파일 경로 확인1brew info nginx  brew info ${패키지명}을 이용하면 해당 패키지가 어디에 설치되어 있는지 확인 할 수 있습">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://i.ibb.co/CpLCJ2w/2021-04-06-4-52-56.png">
+<meta property="article:published_time" content="2021-04-06T10:01:53.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:16:58.072Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="NGINX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/CpLCJ2w/2021-04-06-4-52-56.png"> <link rel="canonical" href="https://jehwanyoo.net/2021/04/06/mac-nginx-tutorial-1-nginx-설치/"/> 
+<title>(mac) NGINX Tutorial #1 - NGINX 설치 | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">(mac) NGINX Tutorial #1 - NGINX 설치</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">4월 6, 2021&nbsp;&nbsp;19:01:53</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NGINX/">NGINX</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>해당 튜토리얼를 시작하기 전에 <code>brew</code> 패키지 관리자가 설치되어 있는지 확인해주세요! (<a target="_blank" rel="noopener" href="https://brew.sh/index_ko">링크</a>)</p>
+<h2 id="NGINX-설치하기"><a href="#NGINX-설치하기" class="headerlink" title="NGINX 설치하기"></a>NGINX 설치하기</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure>
+
+<p>brew를 이용해 NginX를 설치해줍니다.</p>
+<h2 id="nginx-conf-파일-경로-확인"><a href="#nginx-conf-파일-경로-확인" class="headerlink" title="nginx.conf 파일 경로 확인"></a>nginx.conf 파일 경로 확인</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew info nginx</span><br></pre></td></tr></table></figure>
+
+<p>brew info ${패키지명}을 이용하면 해당 패키지가 어디에 설치되어 있는지 확인 할 수 있습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">nginx: stable 1.19.8 (bottled), HEAD</span><br><span class="line">HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server</span><br><span class="line">https://nginx.org/</span><br><span class="line">/opt/homebrew/Cellar/nginx/1.19.8 (25 files, 2.2MB) *</span><br><span class="line">  Poured from bottle on 2021-04-06 at 16:08:43</span><br><span class="line">From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/nginx.rb</span><br><span class="line">License: BSD-2-Clause</span><br><span class="line">==&gt; Dependencies</span><br><span class="line">Required: openssl@1.1 ✔, pcre ✔</span><br><span class="line">==&gt; Options</span><br><span class="line">--HEAD</span><br><span class="line">	Install HEAD version</span><br><span class="line">==&gt; Caveats</span><br><span class="line">Docroot is: /opt/homebrew/var/www</span><br><span class="line"></span><br><span class="line">The default port has been <span class="built_in">set</span> <span class="keyword">in</span> /opt/homebrew/etc/nginx/nginx.conf to 8080 so that</span><br><span class="line">nginx can run without sudo.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>맥 버전에 따라 설치 위치가 다를 수 있으니 확인 부탁드립니다. 저는 <code>/opt/homebrew/etc/nginx/nginx.conf</code>에 설치 되어 있군요.</p>
+<h2 id="80-포트로-변경"><a href="#80-포트로-변경" class="headerlink" title="80 포트로 변경"></a>80 포트로 변경</h2><p>기본 포트가 8080으로 되어있는 경우 80포트로 변경합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /opt/homebrew/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	<span class="comment"># listen 8080;</span></span><br><span class="line">	listen 80;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="홈-디렉토리-심볼릭-링크"><a href="#홈-디렉토리-심볼릭-링크" class="headerlink" title="홈 디렉토리 심볼릭 링크"></a>홈 디렉토리 심볼릭 링크</h2><p>nginx.conf 파일을 확인해보면 다음과 같이 root가 설정 되어 있습니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /opt/homebrew/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">...</span><br><span class="line">location / &#123;</span><br><span class="line">	root   html;</span><br><span class="line">	index  index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>여기서 <code>root html</code>은 웹 루트 디렉토리의 심볼릭 링크입니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls -l /opt/homebrew/Cellar/nginx/1.19.8/html</span><br><span class="line"></span><br><span class="line">lrwxr-xr-x  1 yoojehwan  admin  16  4  6 16:08 /opt/homebrew/Cellar/nginx/1.19.8/html -&gt; ../../../var/www</span><br></pre></td></tr></table></figure>
+
+<p>html 파일은 <code>../../var/www</code> 디렉터리를 가리키고 있습니다.</p>
+<p>개인용으로 사용한다면 루트 디렉터리 설정을 변경하는 것보다 심볼릭 링크를 그대로 가져와서 사용하는 편이 좋다고 생각합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 접근하기 쉽고, 원하는 디렉토리에서 심볼릭 링크를 생성합시다.</span></span><br><span class="line">ln -s /opt/homebrew/var/www [링크 이름]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Homebrew로-백그라운드-서비스-관리"><a href="#Homebrew로-백그라운드-서비스-관리" class="headerlink" title="Homebrew로 백그라운드 서비스 관리"></a>Homebrew로 백그라운드 서비스 관리</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">brew services <span class="comment"># 자동으로 homebrew/services를 tap, 현재 설치된 서비스 목록 확인</span></span><br><span class="line">brew services [run|start|stop|restart|cleanup] service_name <span class="comment"># 명령어</span></span><br><span class="line"><span class="comment"># run - 시작하되, 시작프로그램으로 등록하지 않음</span></span><br><span class="line"><span class="comment"># start - 시작하고 시작프로그램으로 등록</span></span><br><span class="line"></span><br><span class="line">brew services start nginx <span class="comment"># nginx 시작</span></span><br></pre></td></tr></table></figure>
+
+<p>Homebrew의 services를 이용하면 쉽게 백그라운드 서비스를 관리할 수 있습니다.</p>
+<h2 id="http-localhost-접속"><a href="#http-localhost-접속" class="headerlink" title="http://localhost 접속"></a><a target="_blank" rel="noopener" href="http://localhost/">http://localhost</a> 접속</h2><p><img src="https://i.ibb.co/CpLCJ2w/2021-04-06-4-52-56.png" alt="nginx 구동"></p>
+<p>다음 강의에서는 PHP를 설치해보겠습니다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NGINX/"># NGINX</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/04/06/mac-NGINX-Tutorial-2-PHP-%EC%84%A4%EC%B9%98/">(mac) NGINX Tutorial #2 - PHP 설치</a>
+            
+            
+            <a class="next" rel="next" href="/2020/12/29/Unity-Bolt-Visual-Scripting-%EC%86%8C%EA%B0%9C-2-%EB%B3%BC%ED%8A%B8%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B0%9C%EB%85%90/">Unity Bolt Visual Scripting 소개 2 - 볼트의 기본 개념</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

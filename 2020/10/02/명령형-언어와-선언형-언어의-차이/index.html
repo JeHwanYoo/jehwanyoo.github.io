@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="개요 명령형 언어(Imperative Language)와 선언형 언어(Declarative Language)의 차이점에 대해 알아봅시다. 용어 설명 명령형 언어와 선언형 언어는  각각 절차적 언어(Procedural Language)와  비절차적 언어(Non-Procedural Language)로 구분하기도 합니다. 명령형 언어는 어떻게(How) 결과를 얻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="명령형 언어와 선언형 언어의 차이">
+<meta property="og:url" content="https://jehwanyoo.net/2020/10/02/%EB%AA%85%EB%A0%B9%ED%98%95-%EC%96%B8%EC%96%B4%EC%99%80-%EC%84%A0%EC%96%B8%ED%98%95-%EC%96%B8%EC%96%B4%EC%9D%98-%EC%B0%A8%EC%9D%B4/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="개요 명령형 언어(Imperative Language)와 선언형 언어(Declarative Language)의 차이점에 대해 알아봅시다. 용어 설명 명령형 언어와 선언형 언어는  각각 절차적 언어(Procedural Language)와  비절차적 언어(Non-Procedural Language)로 구분하기도 합니다. 명령형 언어는 어떻게(How) 결과를 얻">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://i.ibb.co/F72k22h/image.png">
+<meta property="article:published_time" content="2020-10-02T07:49:29.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:16:58.073Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="Programming Language">
+<meta property="article:tag" content="Imperative Language">
+<meta property="article:tag" content="Declarative Language">
+<meta property="article:tag" content="Procedural Language">
+<meta property="article:tag" content="Functional Programming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/F72k22h/image.png"> <link rel="canonical" href="https://jehwanyoo.net/2020/10/02/명령형-언어와-선언형-언어의-차이/"/> 
+<title>명령형 언어와 선언형 언어의 차이 | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">명령형 언어와 선언형 언어의 차이</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">10월 2, 2020&nbsp;&nbsp;16:49:29</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Programming-Language/">Programming Language</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><hr>
+<p>명령형 언어(Imperative Language)와 선언형 언어(Declarative Language)의 차이점에 대해 알아봅시다.</p>
+<h2 id="용어-설명"><a href="#용어-설명" class="headerlink" title="용어 설명"></a>용어 설명</h2><hr>
+<p>명령형 언어와 선언형 언어는 </p>
+<p>각각 절차적 언어(Procedural Language)와 </p>
+<p>비절차적 언어(Non-Procedural Language)로 구분하기도 합니다.</p>
+<p>명령형 언어는 어떻게(How) 결과를 얻어내는가에 대한</p>
+<p>구체적인 절차를 기술하는 언어입니다.</p>
+<p>명령형 언어의 종류로는 C, C++, 관계 대수 등이 있고 </p>
+<p>Java 같은 객체지향 언어 또한 이 범주에 속합니다.</p>
+<p>선언형 언어는 결과가 무엇(What)인지에 대해 논리적으로 기술하는 언어입니다.</p>
+<p>선언형 언어의 종류로는 </p>
+<p>LISP 같은 함수형 언어 (Functional Language), </p>
+<p>XML 같은 마크업 언어 (Markup Language), </p>
+<p>SQL 같은 질의형 언어 (Query Language)등이 있습니다.</p>
+<h2 id="관점의-차이"><a href="#관점의-차이" class="headerlink" title="관점의 차이"></a>관점의 차이</h2><hr>
+<p><code>성적(grade)이 80점 이상인 학생(students)들의 학번(sid)과 이름(name)을 조회</code></p>
+<p>위 작업에 대한 명령형 언어와 선언형 언어의 관점 차이에 대해 알아봅시다.</p>
+<h3 id="C언어-명령형-언어"><a href="#C언어-명령형-언어" class="headerlink" title="C언어 (명령형 언어)"></a>C언어 (명령형 언어)</h3><hr>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; student_length; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> (student[i].grade &gt;= <span class="number">80</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;sid: %d %s \n&quot;</span>, students[i].sid, students[i].name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>우선 i에 0을 할당해야하고, </p>
+<p>i가 student_length보다 작아야하고, </p>
+<p>if문 비교를 해야하고,</p>
+<p>조건에 충족하면 printf문을 실행해야하고, </p>
+<p>… 반복</p>
+<p>이렇듯 명령형 언어는 </p>
+<p>조건에 맞는 학생을 조회하기 위해 </p>
+<p>순차적인 명령을 기술하고 있습니다.</p>
+<h3 id="관계대수-명령형-언어"><a href="#관계대수-명령형-언어" class="headerlink" title="관계대수 (명령형 언어)"></a>관계대수 (명령형 언어)</h3><hr>
+<p><code>π</code><sub><code>sid,name</code></sub><code>(σ</code><sub><code>grade&gt;=80</code></sub><code>(students))</code></p>
+<p>우선 select를 통해 students 릴레이션에서 </p>
+<p>grade가 80이상인 튜플을 뽑아내고</p>
+<p>sid와 name 속성을 project 하라는 </p>
+<p>절차적 명령을 기술하고 있습니다.</p>
+<h3 id="관계-해석-선언형-언어"><a href="#관계-해석-선언형-언어" class="headerlink" title="관계 해석 (선언형 언어)"></a>관계 해석 (선언형 언어)</h3><hr>
+<p>관계 대수를 배울 때 보통 관계 해석을 같이 배웁니다.</p>
+<p><code>&#123; t.sid, t.name | students(t) and t.grade &gt;= 80 &#125;</code></p>
+<p>위 식은 <code>π</code><sub><code>sid,name</code></sub><code>(σ</code><sub><code>grade&gt;=80</code></sub><code>(students))</code>와 결과는 같지만</p>
+<p>의미하는 바가 다릅니다.</p>
+<p>관계 해석으로 나타낸 식은 </p>
+<p>‘성적이 80점 이상인 학생들의 학번과 이름’을 뜻합니다.</p>
+<p>관계 대수처럼 </p>
+<p>‘성적이 80점 이상인 학생들의 학번과 이름을 구하는 명령’이 아닙니다!</p>
+<h3 id="SQL-선언형-언어"><a href="#SQL-선언형-언어" class="headerlink" title="SQL (선언형 언어)"></a>SQL (선언형 언어)</h3><hr>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sid, name <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> grade <span class="operator">&gt;=</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>학생 테이블에서 성적이 80점 이상인 학생의 학번과 이름이 무엇(what)인지 <U><strong>질의</strong></U>를 한 것 입니다.</p>
+<p>사용자는 질의 만으로 DBMS가 어떤 절차로 sid와 name을 가져오는지 알 수 없습니다.</p>
+<p>또한 어떻게(how) 해서 가져와라라고 명령 할 수 없습니다.</p>
+<p>이제 좀 감이 오시나요?</p>
+<h2 id="절차가-없으면-어떻게-수행하는데"><a href="#절차가-없으면-어떻게-수행하는데" class="headerlink" title="절차가 없으면 어떻게 수행하는데?"></a>절차가 없으면 어떻게 수행하는데?</h2><hr>
+<p>선언형 언어에서는 절차는 중요하지 않습니다.</p>
+<p>어떻게(how) 결과를 얻어내는지는 관심이 없는 것이죠. </p>
+<p>이는 실제 구현이 캡슐화(encapsulation) 되었기 때문입니다.</p>
+<p>“사용자 입장에선 학생의 학번과 이름이 무엇(what)인지 알고 싶은거지</p>
+<p>학생의 학번과 이름을 어떻게(how)해야 얻을 수 있는지는 알고 싶지 않다.”</p>
+<p>라는게 바로 핵심 포인트 입니다.</p>
+<p>그렇다면 실제 머신에서 구현된 선언형 언어들은 </p>
+<p>명령형 언어를 캡슐화하여 탄생한 언어라고 볼 수 있습니다.</p>
+<p>머신보다는 사용자 친화적이라</p>
+<p>당연히 성능상의 trade off는 발생하겠지만</p>
+<p>선언형 언어를 사용하면 검증된 코드의 재사용 통해</p>
+<p>명령형 언어를 사용할 때 Low Level에서 발생하는 실수들을 방지하고 </p>
+<p>안정적인 코딩을 할 수 있습니다…</p>
+<p>라고 함수형 프로그래머들이 꿈을 꾸었습니다.</p>
+<p><img src="https://i.ibb.co/F72k22h/image.png" alt="행복한 꿈을 꾸었습니다"></p>
+<blockquote>
+<p>그들이 생각한 이상과 현실은 달랐다.</p>
+</blockquote>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><hr>
+<p>명령형 언어는 어떻게(how) 할지 기술하는 언어이다.</p>
+<p>선언형 언어는 무엇(what) 인지 기술하는 언어이다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Programming-Language/"># Programming Language</a>
+                    
+                        <a href="/tags/Imperative-Language/"># Imperative Language</a>
+                    
+                        <a href="/tags/Declarative-Language/"># Declarative Language</a>
+                    
+                        <a href="/tags/Procedural-Language/"># Procedural Language</a>
+                    
+                        <a href="/tags/Functional-Programming/"># Functional Programming</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/10/19/XV6%EC%9D%98-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%BD%9C-%ED%98%B8%EC%B6%9C-%EA%B3%BC%EC%A0%95/">XV6의 시스템 콜 호출 과정</a>
+            
+            
+            <a class="next" rel="next" href="/2020/09/28/%EC%A0%95%EC%A0%81-%EC%82%AC%EC%9D%B4%ED%8A%B8(Github%20Pages)%EC%97%90%EC%84%9C-%EC%B5%9C%EC%8B%A0%EA%B8%80-%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0/">정적 사이트(Github Pages)에서 최신글 불러오기 기능 구현하기</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

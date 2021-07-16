@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="개요 오늘은 프로세스에서 중요한 운영체제 몇가지 시스템 콜에 대해 알아보겠습니다. 아래의 개념을 알아야 운영체제의 기본 동작과 sh 프로그램을 이해할 수 있습니다. 예제에서는 예외처리를 하지 않았으니, 실제로 사용하실 때는 예외처리를 엄격하게 해주세요. 자식 프로세스 생성 (fork) 1234#include &lt;unistd.h&gt;pid_t fork(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="프로세스 핵심 시스템 콜을 알아보자 (fork, wait, exec, dup, dup2, pipe)">
+<meta property="og:url" content="https://jehwanyoo.net/2020/10/19/Process-System-Call/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="개요 오늘은 프로세스에서 중요한 운영체제 몇가지 시스템 콜에 대해 알아보겠습니다. 아래의 개념을 알아야 운영체제의 기본 동작과 sh 프로그램을 이해할 수 있습니다. 예제에서는 예외처리를 하지 않았으니, 실제로 사용하실 때는 예외처리를 엄격하게 해주세요. 자식 프로세스 생성 (fork) 1234#include &lt;unistd.h&gt;pid_t fork(">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://i.ibb.co/jW5Z8Fb/2020-10-13-8-04-28.png">
+<meta property="og:image" content="https://i.ibb.co/tJNsgC1/2020-10-13-8-06-58.png">
+<meta property="og:image" content="https://i.ibb.co/zmdBcnp/2020-10-13-9-19-37.png">
+<meta property="og:image" content="https://i.ibb.co/n7twBCC/2020-10-13-8-59-02.png">
+<meta property="og:image" content="https://i.ibb.co/zVwH9fh/2020-10-13-11-19-44.png">
+<meta property="og:image" content="https://i.ibb.co/pjWyhYx/2020-10-13-11-18-19.png">
+<meta property="og:image" content="https://i.ibb.co/fQfPFh2/image.png">
+<meta property="og:image" content="https://i.ibb.co/PTBKRfz/image.png">
+<meta property="og:image" content="https://i.ibb.co/gmYYDtM/image.png">
+<meta property="og:image" content="https://i.ibb.co/pf6zKxc/image.png">
+<meta property="og:image" content="https://i.ibb.co/MZGm3d9/image.png">
+<meta property="og:image" content="https://i.ibb.co/9hb56W7/image.png">
+<meta property="article:published_time" content="2020-10-18T16:51:57.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:16:58.071Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="Operating System">
+<meta property="article:tag" content="System Call">
+<meta property="article:tag" content="unistd.h">
+<meta property="article:tag" content="fork">
+<meta property="article:tag" content="wait">
+<meta property="article:tag" content="exec">
+<meta property="article:tag" content="dup">
+<meta property="article:tag" content="dup2">
+<meta property="article:tag" content="pipe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/jW5Z8Fb/2020-10-13-8-04-28.png"> <link rel="canonical" href="https://jehwanyoo.net/2020/10/19/process-system-call/"/> 
+<title>프로세스 핵심 시스템 콜을 알아보자 (fork, wait, exec, dup, dup2, pipe) | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">프로세스 핵심 시스템 콜을 알아보자 (fork, wait, exec, dup, dup2, pipe)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">10월 19, 2020&nbsp;&nbsp;1:51:57</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Operating-System/">Operating System</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><hr>
+<p>오늘은 프로세스에서 중요한 운영체제 몇가지 시스템 콜에 대해 알아보겠습니다.</p>
+<p>아래의 개념을 알아야 운영체제의 기본 동작과 sh 프로그램을 이해할 수 있습니다.</p>
+<p>예제에서는 예외처리를 하지 않았으니, 실제로 사용하실 때는 예외처리를 엄격하게 해주세요.</p>
+<h2 id="자식-프로세스-생성-fork"><a href="#자식-프로세스-생성-fork" class="headerlink" title="자식 프로세스 생성 (fork)"></a>자식 프로세스 생성 (fork)</h2><hr>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">pid_t</span> <span class="title">fork</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="설명"><a href="#설명" class="headerlink" title="설명"></a>설명</h3><hr>
+<p>새로운 프로세스를 생성하는 시스템 콜 입니다. 새롭게 생성된 자식 프로세스는 새로운 PID를 갖게되며 호출한 부모 프로세스를 그대로 복사합니다. 복사를 통해 자식 프로세스는 부모와 완전히 독립된 물리 메모리 공간을 갖습니다.</p>
+<p>단, 파일 디스크립터는 동작이 다릅니다.</p>
+<p>자식 프로세스는 부모 파일디스크립터의 복사본을 갖습니다. 이 디스크립터들은 같은 오브젝트를 참조하므로 후속 읽기 또는 쓰기에 영향을 미칠 수 있습니다.</p>
+<h3 id="리턴-값"><a href="#리턴-값" class="headerlink" title="리턴 값"></a>리턴 값</h3><hr>
+<ul>
+<li>자식: 0</li>
+<li>부모: 자식의 PID</li>
+<li>에러: -1 리턴하고 errno 설정</li>
+</ul>
+<h3 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h3><hr>
+<p><img src="https://i.ibb.co/jW5Z8Fb/2020-10-13-8-04-28.png" alt="예제 1"></p>
+<p><img src="https://i.ibb.co/tJNsgC1/2020-10-13-8-06-58.png" alt="예제 2"></p>
+<p>fork를 하게 될 경우 가상 주소 공간(주소 레지스터 값)을 그대로 복사합니다. </p>
+<p>주소 레지스터 값이 같지만 서로 다른 값이 대입 되었습니다.</p>
+<p>왜냐하면 주소 레지스터 값이 같다고 해서 실제 물리 메모리 주소가 같지 않기 때문입니다.</p>
+<p>OS에서는 프로세스마다 각자의 페이지 테이블(Page Table)이 존재하고 MMU라는 하드웨어의 도움을 받아 실제 물리 메모리 주소를 찾습니다.</p>
+<p>이러한 방식을 가상 주소 공간(virtual address space)이라고 합니다.</p>
+<h2 id="자식-프로세스의-종료-대기-wait"><a href="#자식-프로세스의-종료-대기-wait" class="headerlink" title="자식 프로세스의 종료 대기 (wait)"></a>자식 프로세스의 종료 대기 (wait)</h2><hr>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">pid_t</span> <span class="title">wait</span><span class="params">(<span class="keyword">int</span> *stat_loc)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="설명-1"><a href="#설명-1" class="headerlink" title="설명"></a>설명</h3><hr>
+<p>자식 프로세스가 종료되기 전까지 부모 프로세스를 기다리게 하는 시스템 콜 입니다.</p>
+<p>좀비 프로세스를 회수하고 고아 프로세스가 되는 것을 방지합니다.</p>
+<h3 id="리턴-값-1"><a href="#리턴-값-1" class="headerlink" title="리턴 값"></a>리턴 값</h3><hr>
+<ul>
+<li>성공: 종료된 자식 프로세스의 PID 리턴</li>
+<li>실패: -1 리턴</li>
+</ul>
+<h3 id="stat-loc의-구조"><a href="#stat-loc의-구조" class="headerlink" title="stat_loc의 구조"></a>stat_loc의 구조</h3><hr>
+<table>
+<thead>
+<tr>
+<th align="left">상황</th>
+<th align="left">하위 8bits</th>
+<th align="left">상위 8bits</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">자식프로세스가 exit를 호출</td>
+<td align="left">exit()의 인자</td>
+<td align="left">0x00</td>
+</tr>
+<tr>
+<td align="left">자식프로세스가 시그널에 의해 종료</td>
+<td align="left">0x00</td>
+<td align="left">1bit (dump) 7bit (signal no)</td>
+</tr>
+<tr>
+<td align="left">자식 프로세스가 SIGSTP, SIGSTOP에 의해 잠시 중단</td>
+<td align="left">8bit (signal no)</td>
+<td align="left">0x7f</td>
+</tr>
+</tbody></table>
+<h3 id="stat-loc-검사-매크로"><a href="#stat-loc-검사-매크로" class="headerlink" title="stat_loc 검사 (매크로)"></a>stat_loc 검사 (매크로)</h3><hr>
+<table>
+<thead>
+<tr>
+<th align="left">매크로</th>
+<th align="left">내용</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">WIF<em>EXITED</em></td>
+<td align="left">자식 프로세스가 정상적으로 종료되었으면 참</td>
+</tr>
+<tr>
+<td align="left">W<em>EXITSTATUS</em></td>
+<td align="left">exit()의 인자에서 하위 8비트 값을 리턴</td>
+</tr>
+<tr>
+<td align="left">WIF<em>SIGNALED</em></td>
+<td align="left">자식 프로세스가 시그널을 받았으나 그것을 처리하지 않아 비정상적으로 종료되었으면 참</td>
+</tr>
+<tr>
+<td align="left">W<em>TERMSIG</em></td>
+<td align="left">시그널 번호를 리턴</td>
+</tr>
+<tr>
+<td align="left">WIF<em>COREDUMP</em></td>
+<td align="left">코어 파일이 생성된 경우에 참</td>
+</tr>
+<tr>
+<td align="left">W<em>STOPSIG</em></td>
+<td align="left">실행을 일시 중단시킨 시그널 번호를 리턴</td>
+</tr>
+</tbody></table>
+<h3 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h3><hr>
+<p><img src="https://i.ibb.co/zmdBcnp/2020-10-13-9-19-37.png" alt="예제3"></p>
+<p><img src="https://i.ibb.co/n7twBCC/2020-10-13-8-59-02.png" alt="예제4"></p>
+<p>exit 함수를 호출하면 어떤 종료 코드를 사용하던 “정상 종료”가 됩니다. WIFEXITED 매크로로 정상 종료 여부를 확인 할 수 있고, WEXITSTATUS 매크로로 종료 코드를 확인 할 수 있습니다.</p>
+<p>exit 이외에 다른 방법으로 프로세스가 종료될 경우 “비정상 종료”로 취급 됩니다. WIFSIGNALED로 비정상 종료 여부를 확인할 수 있고, WTERMSIG로 <a target="_blank" rel="noopener" href="https://www.freebsd.org/cgi/man.cgi?sektion=3&query=signal">시그널 번호</a>를 확인 할 수 있습니다.</p>
+<h3 id="좀비-프로세스와-고아-프로세스"><a href="#좀비-프로세스와-고아-프로세스" class="headerlink" title="좀비 프로세스와 고아 프로세스"></a>좀비 프로세스와 고아 프로세스</h3><hr>
+<ul>
+<li>좀비 프로세스: 프로세스가 종료되면 모든 메모리가 회수 되지 않고 일부가 남아 있는 좀비 프로세스가 됩니다. 부모 프로세스가 wait() 시스템 콜을 호출해주지 않으면 계속 좀비 프로세스 상태로 남습니다.</li>
+<li>고아 프로세스: 자식 프로세스가 종료되기 전에 부모 프로세스가 먼저 종료될 경우 고아 프로세스가 됩니다. 따라서 자식 프로세스를 생성한 경우에 반드시 wait() 시스템 콜을 호출하는 것이 바람직합니다.</li>
+</ul>
+<h2 id="프로세스-변환-exec류-함수"><a href="#프로세스-변환-exec류-함수" class="headerlink" title="프로세스 변환 (exec류 함수)"></a>프로세스 변환 (exec류 함수)</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line"></span><br><span class="line">int execve(const char *pathname, char *const argv[], char *const envp[]);</span><br></pre></td></tr></table></figure>
+
+<h3 id="설명-2"><a href="#설명-2" class="headerlink" title="설명"></a>설명</h3><hr>
+<p>보통 fork()로 자식 프로세스를 생성하고 자식 프로세스에서 exec류 함수를 호출합니다.</p>
+<p>exec류 함수의 종류는 여러 가지가 있지만 execve() 시스템 콜(2)을 제외하고 나머지 함수들은 라이브러리 함수(3) 입니다.</p>
+<p>exec류의 라이브러리 함수는 <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man3/exec.3.html">여기</a>를 참고해주세요.</p>
+<p>sh 계열의 프로그램들이 fork 이후에 자식 프로세스에서 exec()를 호출하는 방식으로 구현 합니다.</p>
+<p>자식 프로세스를 만드는 이유는 두 가지입니다.</p>
+<p>첫번째는 sh 프로세스가 직접 exec()를 호출하면 완전 다른 프로세스로 변환되기 때문에 프로세스 유지가 불가능합니다. </p>
+<p>두번째는 sh 프로세스를 유지함으로서 파이프(||)나 리디렉션(&gt;, &gt;&gt;, &gt;&amp;, &lt;) 등을 처리하기 위함입니다.</p>
+<h3 id="리턴-값-2"><a href="#리턴-값-2" class="headerlink" title="리턴 값"></a>리턴 값</h3><hr>
+<ul>
+<li>성공: 리턴하지 않음</li>
+<li>에러: -1 리턴하고 errno 설정</li>
+</ul>
+<h3 id="예제-2"><a href="#예제-2" class="headerlink" title="예제"></a>예제</h3><hr>
+<p><img src="https://i.ibb.co/zVwH9fh/2020-10-13-11-19-44.png" alt="예제5"></p>
+<p><img src="https://i.ibb.co/pjWyhYx/2020-10-13-11-18-19.png" alt="예제6"></p>
+<h2 id="파일-디스크립터-복제-dup-dup2"><a href="#파일-디스크립터-복제-dup-dup2" class="headerlink" title="파일 디스크립터 복제 (dup, dup2)"></a>파일 디스크립터 복제 (dup, dup2)</h2><hr>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dup</span><span class="params">(<span class="keyword">int</span> oldfd)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dup2</span><span class="params">(<span class="keyword">int</span> oldfd, <span class="keyword">int</span> newfd)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="설명-3"><a href="#설명-3" class="headerlink" title="설명"></a>설명</h3><hr>
+<p>dup() 시스템 콜은 oldfd 파일 디스크립터의 복사본을 생성합니다. 사용되지 않는 파일 디스크립터 값 중에 가장 낮은 숫자를 새로운 디스크립터 값으로 사용합니다.</p>
+<p>dup2() 시스템 콜은 oldfd의 복사본을 만드는 것은 동일하나 직접 newfd를 지정할 수 있습니다. 이미 open된 fd 값을 사용할 수 있습니다.</p>
+<h3 id="리턴-값-3"><a href="#리턴-값-3" class="headerlink" title="리턴 값"></a>리턴 값</h3><hr>
+<ul>
+<li>성공: 새로운 파일 디스크립터 리턴</li>
+<li>에러: -1을 리턴하고 errno 설정</li>
+</ul>
+<h3 id="예제-3"><a href="#예제-3" class="headerlink" title="예제"></a>예제</h3><hr>
+<p><img src="https://i.ibb.co/fQfPFh2/image.png" alt="예제7"></p>
+<p><img src="https://i.ibb.co/PTBKRfz/image.png" alt="예제8"></p>
+<p>dup을 이용해 0(표준 입력), 1(표준 출력)을 각각 3, 4번 fd로 복사하였습니다.</p>
+<p>복사 한 뒤에 read, write를 이용해 tty에 입력을 받고 출력을 하였습니다.</p>
+<h2 id="프로세스간-통신-pipe"><a href="#프로세스간-통신-pipe" class="headerlink" title="프로세스간 통신 (pipe)"></a>프로세스간 통신 (pipe)</h2><hr>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pipe</span><span class="params">(<span class="keyword">int</span> pipefd[<span class="number">2</span>])</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="설명-4"><a href="#설명-4" class="headerlink" title="설명"></a>설명</h3><p><code>pipe()</code>는 프로세스간 단방향 통신을 하기 위해 데이터 채널을 만듭니다.</p>
+<p><code>pipefd</code> 배열에 각각 파일 디스크립터가 리턴됩니다.</p>
+<p><code>pipefd[0]</code>은 파이프의 읽기 끝을 나타냅니다. <code>pipefd[1]</code>은 파이프의 쓰기 끝을 나타냅니다. 파이프의 쓰기쪽에 기록 된 데이터는 파이프의 읽기 쪽에서 읽을 때까지 커널에 의해 버퍼링됩니다.</p>
+<h3 id="리턴-값-4"><a href="#리턴-값-4" class="headerlink" title="리턴 값"></a>리턴 값</h3><ul>
+<li>성공: 0 리턴하고, pipefd 갱신</li>
+<li>에러: -1 리턴하고, errno 설정하고, pipefd는 갱신되지 않음</li>
+</ul>
+<h3 id="예제-1"><a href="#예제-1" class="headerlink" title="예제 1"></a>예제 1</h3><hr>
+<p><img src="https://i.ibb.co/gmYYDtM/image.png" alt="예제9"></p>
+<p><img src="https://i.ibb.co/pf6zKxc/image.png" alt="예제10"></p>
+<p>자식 프로세스에서 파이프 fd[1]에 “Hi, I’m Child”를 write 했습니다.</p>
+<p>부모 프로세스에서는 fd[0]을 read 해서 자식 프로세스에서 write한 “”Hi, I’m Child”를 읽을 수 있습니다.</p>
+<p>위에서 언급한 dup2()를 이용하면 아래와 같이 코드를 변경할 수 있습니다.</p>
+<h3 id="예제-2"><a href="#예제-2" class="headerlink" title="예제 2"></a>예제 2</h3><hr>
+<p><img src="https://i.ibb.co/MZGm3d9/image.png" alt="예제11"></p>
+<p><img src="https://i.ibb.co/9hb56W7/image.png" alt="예제12"></p>
+<p>자식 프로세스에서 표준 출력(1)을 fd[1]로 변경해서 printf()를 호출 했을 때 내용이 fd[1]에 write 됩니다.</p>
+<p>부모 프로세스에서 표준 입력(0)을 fd[0]로 변경해서 scanf()를 호출 했울 때 fd[0]의 내용이 read 됩니다.</p>
+<h3 id="출처"><a href="#출처" class="headerlink" title="출처"></a>출처</h3><hr>
+<p>홍지만, 리눅스 시스템 프로그래밍 V1.0, 도서출판 그린(2019), 91p-95p, 233p-239p, 243p-251p, 253p-262p, 408p-413p<br>리눅스 매뉴얼</p>
+<ul>
+<li>man 2 fork</li>
+<li>man 2 wait</li>
+<li>man 2 execve</li>
+<li>man 2 dup</li>
+<li>man 2 pipe</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Operating-System/"># Operating System</a>
+                    
+                        <a href="/tags/System-Call/"># System Call</a>
+                    
+                        <a href="/tags/unistd-h/"># unistd.h</a>
+                    
+                        <a href="/tags/fork/"># fork</a>
+                    
+                        <a href="/tags/wait/"># wait</a>
+                    
+                        <a href="/tags/exec/"># exec</a>
+                    
+                        <a href="/tags/dup/"># dup</a>
+                    
+                        <a href="/tags/dup2/"># dup2</a>
+                    
+                        <a href="/tags/pipe/"># pipe</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/12/29/Unity-Bolt-Visual-Scripting-%EC%86%8C%EA%B0%9C-1-%EC%84%A4%EC%B9%98%EC%99%80-%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%84%A4%EC%A0%95/">Unity Bolt Visual Scripting 소개 1 - 설치와 레이아웃 설정</a>
+            
+            
+            <a class="next" rel="next" href="/2020/10/19/XV6%EC%9D%98-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%BD%9C-%ED%98%B8%EC%B6%9C-%EA%B3%BC%EC%A0%95/">XV6의 시스템 콜 호출 과정</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

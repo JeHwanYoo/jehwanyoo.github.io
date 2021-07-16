@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="이전 강의NGINX Tutorial #1 - NGINX 설치 NGINX Tutorial #2 - PHP 설치 개요이번 튜토리얼에선 DBMS의 하나인 MariaDB를 설치해봅시다. MariaDB는 MySQL에서 나와 독자노선을 걷고 있는 DBMS라는데 MySQL의 상위호환이 가능하고 많은 벤치 결과에서 MySQL보다 좋다는 의견이 있네요.  🙂 mariad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(mac) NGINX Tutorial #3 - MariaDB 설치">
+<meta property="og:url" content="https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="이전 강의NGINX Tutorial #1 - NGINX 설치 NGINX Tutorial #2 - PHP 설치 개요이번 튜토리얼에선 DBMS의 하나인 MariaDB를 설치해봅시다. MariaDB는 MySQL에서 나와 독자노선을 걷고 있는 DBMS라는데 MySQL의 상위호환이 가능하고 많은 벤치 결과에서 MySQL보다 좋다는 의견이 있네요.  🙂 mariad">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2021-04-10T12:13:12.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:16:58.072Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="NGINX">
+<meta property="article:tag" content="MariaDB">
+<meta name="twitter:card" content="summary"> <link rel="canonical" href="https://jehwanyoo.net/2021/04/10/mac-nginx-tutorial-3-mariadb-설치/"/> 
+<title>(mac) NGINX Tutorial #3 - MariaDB 설치 | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">(mac) NGINX Tutorial #3 - MariaDB 설치</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">4월 10, 2021&nbsp;&nbsp;21:13:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NGINX/">NGINX</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="이전-강의"><a href="#이전-강의" class="headerlink" title="이전 강의"></a>이전 강의</h2><p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">NGINX Tutorial #1 - NGINX 설치</a></p>
+<p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-2-PHP-%EC%84%A4%EC%B9%98/">NGINX Tutorial #2 - PHP 설치</a></p>
+<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>이번 튜토리얼에선 DBMS의 하나인 MariaDB를 설치해봅시다. MariaDB는 MySQL에서 나와 독자노선을 걷고 있는 DBMS라는데 MySQL의 상위호환이 가능하고 많은 벤치 결과에서 MySQL보다 좋다는 의견이 있네요.  🙂</p>
+<h2 id="mariadb-설치"><a href="#mariadb-설치" class="headerlink" title="mariadb 설치"></a>mariadb 설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mariadb</span><br></pre></td></tr></table></figure>
+
+<p>역시 brew로 설치해줍니다.</p>
+<h2 id="패스워드-설정"><a href="#패스워드-설정" class="headerlink" title="패스워드 설정"></a>패스워드 설정</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysqladmin -u 계정 -p password <span class="string">&#x27;비밀번호&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>우선 계정에 root를 넣어 root 패스워드를 변경합니다.</p>
+<p><code>sudo mysql -u root -p password &#39;비밀번호&#39;</code></p>
+<h2 id="mariadb-실행"><a href="#mariadb-실행" class="headerlink" title="mariadb 실행"></a>mariadb 실행</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew services start mariadb</span><br></pre></td></tr></table></figure>
+
+<h2 id="mariadb-로그인"><a href="#mariadb-로그인" class="headerlink" title="mariadb 로그인"></a>mariadb 로그인</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p 또는</span><br><span class="line">mariadb -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>mysql, mariadb 둘다 동일하게 mariadb를 실행합니다.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NGINX/"># NGINX</a>
+                    
+                        <a href="/tags/MariaDB/"># MariaDB</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/">(mac) NGINX Tutorial #4 - PHPMyAdmin 설치</a>
+            
+            
+            <a class="next" rel="next" href="/2021/04/10/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%AC%B8%EC%A0%9C%EC%97%90-%EC%9C%A0%EC%9A%A9%ED%95%9C-JavaScript-%EB%A9%94%EC%84%9C%EB%93%9C/">알고리즘 문제에 유용한 JavaScript 메서드</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

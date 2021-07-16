@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>JeHwan PL Note</title>
+    <link>https://jehwanyoo.net/</link>
+    
+    <atom:link href="https://jehwanyoo.net/rss2.xml" rel="self" type="application/rss+xml"/>
+    
+    <description>프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다.</description>
+    <pubDate>Fri, 16 Jul 2021 10:39:20 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)</title>
+      <link>https://jehwanyoo.net/2021/07/16/Ubuntu-Node-js-%EC%84%A4%EC%B9%98%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-n-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98%EA%B9%8C%EC%A7%80/</link>
+      <guid>https://jehwanyoo.net/2021/07/16/Ubuntu-Node-js-%EC%84%A4%EC%B9%98%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-n-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98%EA%B9%8C%EC%A7%80/</guid>
+      <pubDate>Fri, 16 Jul 2021 10:35:59 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;&lt;a href=&quot;https://nodejs.org/ko/download/&quot;&gt;Node.js 다운로드&lt;/a&gt; 페이지에 방문합니다.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.ibb.co/FWr8dg4/Untitled.png&quot; alt=&quot;downl</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p><a href="https://nodejs.org/ko/download/">Node.js 다운로드</a> 페이지에 방문합니다.</p><p><img src="https://i.ibb.co/FWr8dg4/Untitled.png" alt="download"></p><p><code>패키지 관리자를 통한 Node.js 설치</code> 를 선택합니다.</p><p><img src="https://i.ibb.co/JjN74Wr/Untitled-1.png" alt="Node.js Download - 2"></p><p><code>데비안과 우분투 기반...</code> 을 선택합니다.</p><p><img src="https://i.ibb.co/f4JyXXg/Untitled-2.png" alt="Node.js Download - 3"></p><p><code>Debian and Ubuntu based distributions</code> - <code>Installation Instruction</code> 탭에 이동하여 원하는 버전의 커맨드를 복사합니다.</p><p>저는 LTS버전인 v14.x를 선택하겠습니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Using Ubuntu</span></span><br><span class="line">$ curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure><p><img src="https://i.ibb.co/SnV0kS5/Untitled-3.png" alt="Node.js Download - 4"></p><p><code>node --version</code> 커맨드를 입력해보면 정상적으로 설치 되었음을 알 수 있습니다.</p><h2 id="Node-js-버전-관리-및-전환"><a href="#Node-js-버전-관리-및-전환" class="headerlink" title="Node.js 버전 관리 및 전환"></a>Node.js 버전 관리 및 전환</h2><p><img src="https://i.ibb.co/pXJXV0x/Untitled-4.png" alt="Node.js Download - 5"></p><p><code>n</code> 은 node.js 버전 관리를 매우 쉽게 만들어주는 프로그램입니다.</p><p>n 패키지를 -g 플래그로 전역에 설치해도 되지만, 저 같은 경우 npx 커맨드를 선호하는 편입니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ npx n --lts</span><br><span class="line"></span><br><span class="line">npx: installed 1 <span class="keyword">in</span> 0.551s</span><br><span class="line">14.17.0</span><br></pre></td></tr></table></figure><p>위 커맨드를 입력하면 현재 node.js의 lts 버전이 출력됩니다.</p><p>lts 버전은 이미 설치했으니 latest 버전을 설치해봅시다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ npx n --latest</span><br><span class="line"></span><br><span class="line">npx: installed 1 <span class="keyword">in</span> 0.472s</span><br><span class="line">16.2.0</span><br><span class="line"></span><br><span class="line">$ sudo npx n latest</span><br></pre></td></tr></table></figure><p>위 커맨드에서도 알 수 있듯이 <code>npx --name</code> 은 해당 버전 정보를 <code>npx name</code> 은 실제 설치를 진행합니다. 전역에 설치하기 때문에 만약 루트 권한이 없다면 sudo를 함께 사용합니다.</p><p><img src="https://i.ibb.co/LhSn8nb/Untitled-5.png" alt="Node.js Download - 6"></p><p>설치 직후에는 최근 설치 node로 alias되어 있습니다.</p><p>설치된 node 목록을 확인해봅시다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npx n ls</span><br><span class="line"></span><br><span class="line">node/16.2.0</span><br></pre></td></tr></table></figure><p>어라? LTS로 설치한 14버전이 없군요. 그렇습니다. n으로 설치된 버전만 리스트에 나오게 됩니다.</p><p>따라서 이미 14버전을 설치하셨더라도 다시 한번 n으로 14버전을 설치해주세요. 그래야 버전 전환이 원할하겠죠.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npx n lts</span><br></pre></td></tr></table></figure><p><img src="https://i.ibb.co/TYqTMLT/Untitled-6.png" alt="Node.js Download - 7"></p><p>전환하려면 n lts, n stable, n [version]등을 입력합니다. (이미 설치된 경우 다시 설치하지 않고 전환이 되는 원리입니다.)</p><p>아니면, n 커맨드만 입력해서 방향키로 전환이 가능합니다.</p><p><img src="https://i.ibb.co/qCCdQbf/Untitled-7.png" alt="Node.js Download - 8"></p>]]></content:encoded>
+      
+      
+      <category domain="https://jehwanyoo.net/categories/Node-js/">Node.js</category>
+      
+      
+      <category domain="https://jehwanyoo.net/tags/Node-js/">Node.js</category>
+      
+      <category domain="https://jehwanyoo.net/tags/Ubuntu/">Ubuntu</category>
+      
+      
+      <comments>https://jehwanyoo.net/2021/07/16/Ubuntu-Node-js-%EC%84%A4%EC%B9%98%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-n-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98%EA%B9%8C%EC%A7%80/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>NPM에 있는 모듈 맘대로 써도 될까?</title>
+      <link>https://jehwanyoo.net/2021/05/21/NPM%EC%97%90-%EC%9E%88%EB%8A%94-%EB%AA%A8%EB%93%88-%EB%A7%98%EB%8C%80%EB%A1%9C-%EC%8D%A8%EB%8F%84-%EB%90%A0%EA%B9%8C/</link>
+      <guid>https://jehwanyoo.net/2021/05/21/NPM%EC%97%90-%EC%9E%88%EB%8A%94-%EB%AA%A8%EB%93%88-%EB%A7%98%EB%8C%80%EB%A1%9C-%EC%8D%A8%EB%8F%84-%EB%90%A0%EA%B9%8C/</guid>
+      <pubDate>Fri, 21 May 2021 14:29:01 GMT</pubDate>
+      
+        
+        
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://velog.io/@formail0001/NPM%EC%97%90-%EC%9E%88%EB%8A%94-%EB%AA%A8%EB%93%88-%EB%A7%98%EB%8C%80%EB%A1%9C-%EC%8D</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<blockquote><p><a href="https://velog.io/@formail0001/NPM%EC%97%90-%EC%9E%88%EB%8A%94-%EB%AA%A8%EB%93%88-%EB%A7%98%EB%8C%80%EB%A1%9C-%EC%8D%A8%EB%8F%84-%EB%90%A0%EA%B9%8C">velog</a>에도 연재하였습니다.</p></blockquote><h2 id="npm-install"><a href="#npm-install" class="headerlink" title="npm install"></a>npm install</h2><p>node.js로 개발하다보면 아무 생각 없이 npm install을 하곤 한다.</p><p>지금까지 개발하면서 한번도 라이센스(LICENSE)에 대해 깊이 생각해본적이 없는거 같다.</p><p>오픈소스에는 어김 없이 LICENSE가 존재한다. 그 문서에는 copyright 내지는 copyleft가 있다.</p><p>나는 그 문서를 한번이라도 제대로 읽어 본 적이 있을까…?</p><h2 id="운이-좋게도"><a href="#운이-좋게도" class="headerlink" title="운이 좋게도"></a>운이 좋게도</h2><p>npm에 올라오는 프로젝트는 운이 좋게도 9할 이상이 MIT LINCENSE를 채택하고 있다.</p><p>MIT LICENSE는 한마디로 ‘꼼꼼하게 안 읽어도 되는 라이센스’이다. 그만큼 관대하다는 얘기.</p><p>NPM이 방대한 생태계를 갖게된것도 하루에 500개가 넘는 모듈이 올라와도 문제가 안터지는 것도 모두 MIT 덕이다.</p><h2 id="그래도-배포전에는-확인하자"><a href="#그래도-배포전에는-확인하자" class="headerlink" title="그래도 배포전에는 확인하자"></a>그래도 배포전에는 확인하자</h2><p>아주 흔하게 사용하는 dotenv 모듈을 살펴보자.</p><p><img src="https://images.velog.io/images/formail0001/post/47834e58-b56d-4f59-a127-1be7ab4426dc/dotenv.PNG" alt="dotenv1"></p><p>dotenv는 BSD-2-Clause LICENSE를 채택하고 있다.</p><p><img src="https://images.velog.io/images/formail0001/post/2fc8cf14-9ece-4ebc-8925-884f282e56e4/dotenv2.PNG" alt="dotenv2"></p><p>즉, 두가지를 지켜줘야하는데</p><ol><li>저작권자 표시</li><li>라이센스 내용과 보증 부정</li></ol><p>당신의 프로젝트의 <code>NOTICE.md</code> 같은 텍스트 파일에 위 내용을 명시해줘야한다.</p><h2 id="그래서-어떻게"><a href="#그래서-어떻게" class="headerlink" title="그래서 어떻게"></a>그래서 어떻게</h2><p>첫번째 방법은 LICENSE의 사본을 그대로 가져오는 것이다.</p><p><img src="https://images.velog.io/images/formail0001/post/b0965aea-b7e5-42dc-8fcf-993e272450ef/dotenv4.PNG" alt="dotenv3"></p><p>두번째 방법은 LICENSE 사본의 링크를 첨부하는 방법이다. 라이센스의 사본을 첨부해야하는데 라이센스가 너무 긴 경우에 활용할 수 있다.</p><p>사본을 프로젝트 내 다른 문서에 저장해놓거나 사본이 있는 하이퍼링크를 명시해 놓자.</p><p><img src="https://images.velog.io/images/formail0001/post/c794277a-cfa5-40ab-97e6-131dbd3fcbba/dotenv5.PNG" alt="dotenv4"></p><h2 id="아-너무-복잡해"><a href="#아-너무-복잡해" class="headerlink" title="아 너무 복잡해"></a>아 너무 복잡해</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * ----------------------------------------------------------------------------</span><br><span class="line"> * &quot;THE BEER-WARE LICENSE&quot; (Revision 42):</span><br><span class="line"> * &lt;phk@FreeBSD.ORG&gt; wrote this file.  As long as you retain this notice you</span><br><span class="line"> * can do whatever you want with this stuff. If we meet some day, and you think</span><br><span class="line"> * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp</span><br><span class="line"> * ----------------------------------------------------------------------------</span><br><span class="line"> */</span><br></pre></td></tr></table></figure><blockquote><p>ooo 가 이 파일을 작성함. 이 고지를 유지하는한 너 맘대로 뭘 해도 상관 없어. 언젠가 우리가 서로 만나게 됐을때, 너가 맘에 들었다면, 맥주나 한잔 사줘.</p></blockquote><p>복잡한 이 세상, 모든 사람들이 Beerware 처럼 살아가면 얼마나 좋을까.</p>]]></content:encoded>
+      
+      
+      <category domain="https://jehwanyoo.net/categories/LICENSE/">LICENSE</category>
+      
+      
+      <category domain="https://jehwanyoo.net/tags/LICENSE/">LICENSE</category>
+      
+      <category domain="https://jehwanyoo.net/tags/NPM/">NPM</category>
+      
+      
+      <comments>https://jehwanyoo.net/2021/05/21/NPM%EC%97%90-%EC%9E%88%EB%8A%94-%EB%AA%A8%EB%93%88-%EB%A7%98%EB%8C%80%EB%A1%9C-%EC%8D%A8%EB%8F%84-%EB%90%A0%EA%B9%8C/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>좋은 REST API 설계 방법에 대한 고찰</title>
+      <link>https://jehwanyoo.net/2021/05/19/%EC%A2%8B%EC%9D%80-REST-API-%EC%84%A4%EA%B3%84-%EB%B0%A9%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/</link>
+      <guid>https://jehwanyoo.net/2021/05/19/%EC%A2%8B%EC%9D%80-REST-API-%EC%84%A4%EA%B3%84-%EB%B0%A9%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/</guid>
+      <pubDate>Tue, 18 May 2021 19:52:14 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h2 id=&quot;1-서론&quot;&gt;&lt;a href=&quot;#1-서론&quot; class=&quot;headerlink&quot; title=&quot;1. 서론&quot;&gt;&lt;/a&gt;1. 서론&lt;/h2&gt;&lt;p&gt;몇 달전 서점에서 “웹 API 디자인” 이라는 책을 구매해서 열심히 읽어봤다.&lt;/p&gt;
+&lt;p&gt;이 책을 읽고나서</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="1-서론"><a href="#1-서론" class="headerlink" title="1. 서론"></a>1. 서론</h2><p>몇 달전 서점에서 “웹 API 디자인” 이라는 책을 구매해서 열심히 읽어봤다.</p><p>이 책을 읽고나서 OAS에 대해 알게 되었다.</p><p>백엔드 프로그래밍을 주로 하겠다는 사람이 아직도 이걸 몰랐다니,</p><p>역시 사람은 아는 만큼 보이나보다.</p><p>아무튼, 이번 학기 프로젝트를 진행하면서 API를 설계하는데</p><p>이 책의 내용과 내 나름대로의 원칙을 결합하여 좋은 REST API가 무엇인가를 고민해 보았다.</p><h2 id="2-본론"><a href="#2-본론" class="headerlink" title="2. 본론"></a>2. 본론</h2><h3 id="2-1-API-설계-딜레마"><a href="#2-1-API-설계-딜레마" class="headerlink" title="2.1 API 설계 딜레마"></a>2.1 API 설계 딜레마</h3><hr><p>사실 ‘좋은 API’가 무엇인가? 를 한마디로 정의하긴 어렵다. 이 책에서도 완벽한 API 설계는 불가능하다고 말한다. API 설계는 상황에 따라 달라질 필요가 있다.</p><p>원칙을 너무 고수하면 이해하기 어려운 API가 튀어나오고, 그렇다고 원칙을 지키지 않으면 스파게티 API가 되어버린다. 적절한 타협이 필요한 것 이다.</p><p>그리고 ‘좋은 API’라는 단어는 상당히 주관적인 성격을 가진다. 내게는 좋아보이지만 상대방은 그렇지 않을 수 있다. 그러므로 나 또한 이 책에서 소개하는 API 설계 이론 모두를 동의하는 것은 아니다.</p><p>지금 소개하는 방법은 이 책의 내용을 어느정도 수용하고, 또 내가 생각하는 좋은 방법이 담겨져 있다. 이 글을 읽고난 뒤 본인에게 맞는 API 설계 원칙을 한번 세워보는 것도 좋을 것 같다. (물론 회사에 다닌다면 그 회사에 맞는 원칙을 따르라…)</p><h3 id="2-2-RESTFUL-이해"><a href="#2-2-RESTFUL-이해" class="headerlink" title="2.2 RESTFUL 이해"></a>2.2 RESTFUL 이해</h3><hr><p>우선 본인이 어떤 원칙을 가지고 있던 간에, API 설계라는건 다른 사람들이 당신의 API를 보고 끄덕 할 수 있도록 ‘RESTFUL’한 조건에 기반하여야 한다. 대한민국의 모든 법은 헌법에 기초하는 것과 같은 원리다.</p><ul><li>리소스(Resource)는 명사, 복수형이다.</li><li>GET(조회), POST(추가), PATCH(수정), DELETE(삭제) 정확히 사용하자.</li></ul><p>리소스가 명사여야 하는 이유는 HTTP Methods가 이미 동사이기 때문이다.</p><p>의외로 아무 생각 없이 짜다보면 지키지 않는 경우가 많다!</p><h3 id="2-3-Query-String-vs-Parameter-String"><a href="#2-3-Query-String-vs-Parameter-String" class="headerlink" title="2.3 Query String vs Parameter String"></a>2.3 Query String vs Parameter String</h3><hr><p>URL을 구성할 때, Query String과 Parameter Path가 뭔지 또 어떨때 사용해야하는지 구분 못하는 사람들이 은근히 많다.</p><p>우선 Parameter Path은 가변 경로라고 보면 된다.</p><p><code>/students/:student_id</code> 라는 경로는 <code>/students/20152399</code> 또는 <code>students/20172499</code> 이런 식으로 변할 수 있다. 즉, <code>:student_id</code> 이 부분이 가변이라는 것이다.</p><p>Query String은 path 뒤에 <code>?</code> 부터 시작하여 <code>key=value</code> 쌍을 갖는다.</p><p>다음 API를 생각해보자.</p><p><code>GET /students?gender=male</code> 이런 API가 있다면 남자인 학생들만 조회한다.</p><p>즉, QueryString은 필터링(Filtering)을 위한 용도로 활용되어야 한다.</p><p>물론 이 부분은 개인 취향일 수 있다. ‘key를 이용한 검색’에서 파라미터를 사용하지 않고 전부 쿼리로 때려버리는 경우도 아주 흔하기 때문이다.</p><p>그러나 그것은 별로 좋은 방법은 아니라고 생각한다. key라는 것은 본래 하나의 원소를 특정하기 위해 존재하는 것이 아닌가? 그렇다면 특정 리소스를 지칭할 수 있는 의미를 갖게 하는 것이 좋다.</p><p><code>GET /students?student_id=20152399</code> 보다는 <code>GET /students/20152399</code>이 낫다는 것이다.</p><h3 id="2-4-예제-Schema"><a href="#2-4-예제-Schema" class="headerlink" title="2.4 예제 Schema"></a>2.4 예제 Schema</h3><hr><p>다음과 같은 학생 Table이 있다고 가정하자.</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student_id TEXT <span class="keyword">PRIMARY</span> KEY</span><br><span class="line">name TEXT</span><br><span class="line">gender NUMBER</span><br><span class="line">department TEXT</span><br></pre></td></tr></table></figure><h3 id="2-5-조회-API"><a href="#2-5-조회-API" class="headerlink" title="2.5 조회 API"></a>2.5 조회 API</h3><hr><p>조회 API는 크게 두 가지로 구현한다.</p><h4 id="2-5-1-통함-검색"><a href="#2-5-1-통함-검색" class="headerlink" title="2.5.1 통함 검색"></a>2.5.1 통함 검색</h4><hr><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /students</span><br></pre></td></tr></table></figure><ul><li><p>Query String (필터링)</p><ul><li><code>gender = male | female</code></li><li><code>department = 학과명</code></li></ul></li><li><p>Return Type</p><ul><li><code>Array&lt;Student&gt;</code></li></ul></li><li><p>example</p><ul><li>컴퓨터학부 여학생 조회: <code>GET /students?department=컴퓨터학부&amp;gender=female</code></li></ul></li></ul><h4 id="2-5-2-특정-레코드-검색"><a href="#2-5-2-특정-레코드-검색" class="headerlink" title="2.5.2 특정 레코드 검색"></a>2.5.2 특정 레코드 검색</h4><hr><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /students/:student_id</span><br></pre></td></tr></table></figure><ul><li><p>Parameter Path</p><ul><li><code>:student_id</code> 학번</li></ul></li><li><p>Return Type</p><ul><li><code>Student</code></li></ul></li><li><p>example</p><ul><li>학번이 20152399인 학생 조회: <code>GET /students/20152399</code></li></ul></li></ul><h3 id="2-6-추가-API"><a href="#2-6-추가-API" class="headerlink" title="2.6 추가 API"></a>2.6 추가 API</h3><hr><p>POST 메소드를 사용하여 학생을 추가한다.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST /students/:student_id</span><br></pre></td></tr></table></figure><ul><li>Request Bodies</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name,</span><br><span class="line">  gender,</span><br><span class="line">  department</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="2-7-삭제-API"><a href="#2-7-삭제-API" class="headerlink" title="2.7 삭제 API"></a>2.7 삭제 API</h3><hr><p>parameter path(primary key)를 이용해 삭제한다.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE /students/:studnet_id</span><br></pre></td></tr></table></figure><h3 id="2-8-수정-API"><a href="#2-8-수정-API" class="headerlink" title="2.8 수정 API"></a>2.8 수정 API</h3><p>parameter path(primary key)와 request body를 동시에 이용한다.</p><p>원소를 식별하기 위해, student_id를 제발 request body에 넣지말자!!</p><hr><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATCH /students/:student_id</span><br></pre></td></tr></table></figure><ul><li>Request Bodies</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name,</span><br><span class="line">  gender,</span><br><span class="line">  department</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>단, 부분 업데이트이기 때문에 모든 Request Body를 선택사항(Optional)로 구현한다.</p><ul><li><p>example</p><ul><li>학번이 20152399인 학생의 학과를 소프트웨어학과로 변경:</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PATCH /students/20152399</span><br><span class="line">&#123;</span><br><span class="line">  &quot;department&quot;: &quot;소프트웨어학과&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><h3 id="2-9-소유-관계-API"><a href="#2-9-소유-관계-API" class="headerlink" title="2.9 소유 관계 API"></a>2.9 소유 관계 API</h3><p>이 책에서 소유 관계는 다음과 같이 표현하라고 한다.</p><ul><li>학번이 20152399인 학생이 가지고 있는 연필: <code>GET /students/20152399/pencils</code></li></ul><p>이를 API로 나타내면 <code>GET /students/:student_id/pencils</code>일 것이다.</p><p>만약에 어떤 학생에게 새로운 연필을 추가한다고 하면 어떻게 해야할까?</p><p>역시 parameter path를 이용한 설계가 필요하다.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST /students/:student_id/pencils</span><br></pre></td></tr></table></figure><h2 id="3-결론"><a href="#3-결론" class="headerlink" title="3. 결론"></a>3. 결론</h2><hr><p>API 설계는 결코 쉽지 않다. 이해하기 쉬운 API를 설계하는 과정에서 정말 갈등되는 상황이 많기 때문이다.</p><p>API 설계에 있어 많은 경험과 확고한 원칙 그리고 유연한 사고가 필요하지 않을까.</p>]]></content:encoded>
+      
+      
+      <category domain="https://jehwanyoo.net/categories/Backend-Programming/">Backend Programming</category>
+      
+      
+      <category domain="https://jehwanyoo.net/tags/REST-API/">REST API</category>
+      
+      
+      <comments>https://jehwanyoo.net/2021/05/19/%EC%A2%8B%EC%9D%80-REST-API-%EC%84%A4%EA%B3%84-%EB%B0%A9%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>(mac) NGINX Tutorial #4 - PHPMyAdmin 설치</title>
+      <link>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/</link>
+      <guid>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/</guid>
+      <pubDate>Sat, 10 Apr 2021 13:57:20 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h2 id=&quot;이전-강의&quot;&gt;&lt;a href=&quot;#이전-강의&quot; class=&quot;headerlink&quot; title=&quot;이전 강의&quot;&gt;&lt;/a&gt;이전 강의&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutori</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="이전-강의"><a href="#이전-강의" class="headerlink" title="이전 강의"></a>이전 강의</h2><p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">NGINX Tutorial #1 - NGINX 설치</a></p><p><a href="https://jehwanyoo.net/archives/">NGINX Tutorial #2 - PHP 설치</a></p><p><a href="https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/">NGINX Tutorial #3 - MariaDB 설치</a></p><h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>이 튜토리얼은 반드시 이전 MariaDB를 설치하고 진행해주세요.</p><h2 id="PHPMyAdmin-설치"><a href="#PHPMyAdmin-설치" class="headerlink" title="PHPMyAdmin 설치"></a>PHPMyAdmin 설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install phpmyadmin</span><br></pre></td></tr></table></figure><p>brew로 phpmyadmin을 설치해줍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The configuration file is /opt/homebrew/etc/phpmyadmin.config.inc.php</span><br></pre></td></tr></table></figure><p>brew 설치가 완료되면 config 파일의 위치를 알려줍니다.</p><p>그리고 저희는 Apache가 아니라 NGINX이므로 NGINX 방식으로 디렉터리를 설정해야겠습니다.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Alias /phpmyadmin /opt/homebrew/share/phpmyadmin</span><br><span class="line">&lt;Directory /opt/homebrew/share/phpmyadmin/&gt;</span><br><span class="line">    Options Indexes FollowSymLinks MultiViews</span><br><span class="line">    AllowOverride All</span><br><span class="line">    &lt;IfModule mod_authz_core.c&gt;</span><br><span class="line">        Require all granted</span><br><span class="line">    &lt;/IfModule&gt;</span><br><span class="line">    &lt;IfModule !mod_authz_core.c&gt;</span><br><span class="line">        Order allow,deny</span><br><span class="line">        Allow from all</span><br><span class="line">    &lt;/IfModule&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure><p>위와 유사한 방식을 NGINX로 구현하면</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /opt/homebrew/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure><p>(brew로 설치한 경우) nginx.conf 파일 위치를 모르겠으면? brew info nginx를 입력하면 위치가 나온다.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">...</span><br><span class="line">location /phpmyadmin &#123;</span><br><span class="line">root    /opt/homebrew/share;</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">fastcgi_index  index.php;</span><br><span class="line">fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_na    me;</span><br><span class="line">include        fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>php를 찾는 경로가 전역에서는 web root이기 때문에 /phpmyadmin으로 들어오는 경로에 대해서는 다른 php 위치 룰을 적용했습니다.</p><h2 id="NGINX-재시작-후-Setup"><a href="#NGINX-재시작-후-Setup" class="headerlink" title="NGINX 재시작 후 Setup"></a>NGINX 재시작 후 Setup</h2><p>우선 nginx를 재시작해줍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services restart nginx</span><br></pre></td></tr></table></figure><p>그런 뒤 <a href="http://localhost/phpmyadmin%EC%97%90">http://localhost/phpmyadmin에</a> 접속해봅시다.</p><h2 id="접속-확인"><a href="#접속-확인" class="headerlink" title="접속 확인"></a>접속 확인</h2><p><img src="https://i.ibb.co/Y8cxzMZ/2021-04-10-10-40-24.png" alt="https://i.ibb.co/Y8cxzMZ/2021-04-10-10-40-24.png"></p><p>DB계정으로 로그인하면 접속이 가능합니다.</p><h2 id="Waring-Error-지우기"><a href="#Waring-Error-지우기" class="headerlink" title="Waring, Error 지우기"></a>Waring, Error 지우기</h2><p><img src="https://i.ibb.co/LgFcVxY/2021-04-10-10-43-37.png" alt="https://i.ibb.co/LgFcVxY/2021-04-10-10-43-37.png"></p><p>처음 설치하면 warning이나 Error가 뜹니다. 실제로 문제가 발생할 수도 있으니 발생한 오류들은 모두 제거해줍시다.</p><p>가장 위의 에러는 여기를 클릭하고 하라는대로 하면 해결됩니다.</p><p>그 다음으로,</p><p><code>이제 설정 파일은 암호화 문자열(blowfish_secret)을 필요로 합니다.</code></p><p>같은 경우 config 파일을 열고 blowfish_secret 항목을 작성합니다.</p><p>최소 32자 이상이여야 합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/homebrew/etc/phpmyadmin.config.inc.php</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * This is needed for cookie based authentication to encrypt password in</span><br><span class="line"> * cookie. Needs to be 32 chars long.</span><br><span class="line"> */</span><br><span class="line">$cfg[&#x27;blowfish_secret&#x27;] = &#x27;&#x27;; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */</span><br></pre></td></tr></table></figure><p>아무거나 넣어도 되지만, 기왕이면 랜덤으로 생성해봅시다. <a href="http://www.unit-conversion.info/texttools/random-string-generator/">링크</a></p><p><img src="https://i.ibb.co/cbqxQ21/2021-04-10-10-53-03.png" alt="https://i.ibb.co/cbqxQ21/2021-04-10-10-53-03.png"></p><p>그러면 오류가 사라집니다.</p><p>완료!</p>]]></content:encoded>
+      
+      
+      <category domain="https://jehwanyoo.net/categories/NGINX/">NGINX</category>
+      
+      
+      <category domain="https://jehwanyoo.net/tags/NGINX/">NGINX</category>
+      
+      <category domain="https://jehwanyoo.net/tags/PHPMyAdmin/">PHPMyAdmin</category>
+      
+      
+      <comments>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>(mac) NGINX Tutorial #3 - MariaDB 설치</title>
+      <link>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/</link>
+      <guid>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/</guid>
+      <pubDate>Sat, 10 Apr 2021 12:13:12 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h2 id=&quot;이전-강의&quot;&gt;&lt;a href=&quot;#이전-강의&quot; class=&quot;headerlink&quot; title=&quot;이전 강의&quot;&gt;&lt;/a&gt;이전 강의&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutori</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="이전-강의"><a href="#이전-강의" class="headerlink" title="이전 강의"></a>이전 강의</h2><p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">NGINX Tutorial #1 - NGINX 설치</a></p><p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-2-PHP-%EC%84%A4%EC%B9%98/">NGINX Tutorial #2 - PHP 설치</a></p><h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>이번 튜토리얼에선 DBMS의 하나인 MariaDB를 설치해봅시다. MariaDB는 MySQL에서 나와 독자노선을 걷고 있는 DBMS라는데 MySQL의 상위호환이 가능하고 많은 벤치 결과에서 MySQL보다 좋다는 의견이 있네요.  🙂</p><h2 id="mariadb-설치"><a href="#mariadb-설치" class="headerlink" title="mariadb 설치"></a>mariadb 설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mariadb</span><br></pre></td></tr></table></figure><p>역시 brew로 설치해줍니다.</p><h2 id="패스워드-설정"><a href="#패스워드-설정" class="headerlink" title="패스워드 설정"></a>패스워드 설정</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysqladmin -u 계정 -p password <span class="string">&#x27;비밀번호&#x27;</span></span><br></pre></td></tr></table></figure><p>우선 계정에 root를 넣어 root 패스워드를 변경합니다.</p><p><code>sudo mysql -u root -p password &#39;비밀번호&#39;</code></p><h2 id="mariadb-실행"><a href="#mariadb-실행" class="headerlink" title="mariadb 실행"></a>mariadb 실행</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew services start mariadb</span><br></pre></td></tr></table></figure><h2 id="mariadb-로그인"><a href="#mariadb-로그인" class="headerlink" title="mariadb 로그인"></a>mariadb 로그인</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p 또는</span><br><span class="line">mariadb -u root -p</span><br></pre></td></tr></table></figure><p>mysql, mariadb 둘다 동일하게 mariadb를 실행합니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://jehwanyoo.net/categories/NGINX/">NGINX</category>
+      
+      
+      <category domain="https://jehwanyoo.net/tags/NGINX/">NGINX</category>
+      
+      <category domain="https://jehwanyoo.net/tags/MariaDB/">MariaDB</category>
+      
+      
+      <comments>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/#disqus_thread</comments>
+      
+    </item>
+    
+  </channel>
+</rss>

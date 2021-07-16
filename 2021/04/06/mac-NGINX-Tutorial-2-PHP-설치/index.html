@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="nginx를 설치하지 않으신 분들은 이전 강의(#1)를 참고해주세요. PHP 설치하기homebrew에 php 패키지가 있는지 확인해봅시다. 1brew search php  123456&#x3D;&#x3D;&gt; Formulaebrew-php-switcher       php-cs-fixer            php@7.4                 phpmd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(mac) NGINX Tutorial #2 - PHP 설치">
+<meta property="og:url" content="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-2-PHP-%EC%84%A4%EC%B9%98/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="nginx를 설치하지 않으신 분들은 이전 강의(#1)를 참고해주세요. PHP 설치하기homebrew에 php 패키지가 있는지 확인해봅시다. 1brew search php  123456&#x3D;&#x3D;&gt; Formulaebrew-php-switcher       php-cs-fixer            php@7.4                 phpmd">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://i.ibb.co/ckJP08v/2021-04-06-6-42-55.png">
+<meta property="article:published_time" content="2021-04-06T10:02:05.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:16:58.072Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="NGINX">
+<meta property="article:tag" content="PHP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/ckJP08v/2021-04-06-6-42-55.png"> <link rel="canonical" href="https://jehwanyoo.net/2021/04/06/mac-nginx-tutorial-2-php-설치/"/> 
+<title>(mac) NGINX Tutorial #2 - PHP 설치 | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">(mac) NGINX Tutorial #2 - PHP 설치</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">4월 6, 2021&nbsp;&nbsp;19:02:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/NGINX/">NGINX</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>nginx를 설치하지 않으신 분들은 이전 강의(<a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">#1</a>)를 참고해주세요.</p>
+<h2 id="PHP-설치하기"><a href="#PHP-설치하기" class="headerlink" title="PHP 설치하기"></a>PHP 설치하기</h2><p>homebrew에 php 패키지가 있는지 확인해봅시다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">==&gt; Formulae</span><br><span class="line">brew-php-switcher       php-cs-fixer            php@7.4                 phpmd                   phpunit</span><br><span class="line">php                     php@7.2                 phpbrew                 phpmyadmin</span><br><span class="line">php-code-sniffer        php@7.3                 phplint                 phpstan</span><br><span class="line">==&gt; Casks</span><br><span class="line">homebrew/cask/eclipse-php                                   homebrew/cask/netbeans-php</span><br></pre></td></tr></table></figure>
+
+<p>php 패키지가 존재합니다.</p>
+<p>info 명령어로 좀 더 자세하게 확인해봅시다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew info php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">php: stable 8.0.3 (bottled), HEAD</span><br><span class="line">...</span><br><span class="line">The php.ini and php-fpm.ini file can be found in:</span><br><span class="line">    /opt/homebrew/etc/php/8.0/</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>php 8 버전이군요.</p>
+<p>7 버전을 원하시면 <a href="mailto:&#112;&#104;&#112;&#64;&#x37;&#x2e;&#120;">&#112;&#104;&#112;&#64;&#x37;&#x2e;&#120;</a> 이렇게 설치하시면 될 것 같습니다.</p>
+<p>설치 후 <code>php.ini</code>라는 파일이 중요하니 대충 저런곳에 있구나라고 기억해둡시다. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php</span><br></pre></td></tr></table></figure>
+
+<h2 id="PHP-백그라운드에서-실행"><a href="#PHP-백그라운드에서-실행" class="headerlink" title="PHP 백그라운드에서 실행"></a>PHP 백그라운드에서 실행</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services start php</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어를 실행하면 PHP 프로그램을 백그라운드에서 실행하기 위한 php-fpm이 9000번 포트에 실행됩니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i :9000 <span class="comment"># 9000번 포트에 실행되는지 확인</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="NGINX와-연동"><a href="#NGINX와-연동" class="headerlink" title="NGINX와 연동"></a>NGINX와 연동</h2><p>nginx.conf 파일을 열어줍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /opt/homebrew/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p>index에 index.php를 추가해주시고 fastcgi 부분을 활성화해줍니다.</p>
+<p>또, fastcgi_param 부분에서 /scripts를 $document_root로 바꿔줍니다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">	root   html;</span><br><span class="line">  index  index.html index.htm index.php;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">	root           html;</span><br><span class="line">  fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">  fastcgi_index  index.php;</span><br><span class="line">  # fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span><br><span class="line">  fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;	</span><br><span class="line">	include        fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>$document_root는 웹 루트 디렉토리 값 입니다.</p>
+<p>저는 웹 루트 경로가 <code>/opt/homebrew/Cellar/nginx/1.19.8/html</code> 입니다.</p>
+<p>웹 루트에서 index.html을 지우고 index.php를 작성합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm index.html</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&lt;?php phpinfo(); ?&gt;&quot;</span> &gt; index.php</span><br></pre></td></tr></table></figure>
+
+<p>nginx를 다시 시작합니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services restart nginx</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://localhost/">http://localhost</a>에 접속해봅니다.</p>
+<p><img src="https://i.ibb.co/ckJP08v/2021-04-06-6-42-55.png" alt="php 구동"></p>
+<p>완료!</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/NGINX/"># NGINX</a>
+                    
+                        <a href="/tags/PHP/"># PHP</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/04/10/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%AC%B8%EC%A0%9C%EC%97%90-%EC%9C%A0%EC%9A%A9%ED%95%9C-JavaScript-%EB%A9%94%EC%84%9C%EB%93%9C/">알고리즘 문제에 유용한 JavaScript 메서드</a>
+            
+            
+            <a class="next" rel="next" href="/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">(mac) NGINX Tutorial #1 - NGINX 설치</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

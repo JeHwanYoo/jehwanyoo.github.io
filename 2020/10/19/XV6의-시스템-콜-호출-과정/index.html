@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="개요 교육용 OS로 개발된 XV6의 시스템 콜 호출 과정을 알아보겠습니다. 시스템 콜은 커널 작업을 안전하게 수행할 수 있게 유저에게 제공하는 OS API 입니다. 시스템 콜 정의  usys.S   SYSCALL(name) 매크로를 통해 name에 해당하는 시스템 콜을 정의합니다. movl $SYS_ ## name, $eax;는 syscall.h에 정의되어">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XV6의 시스템 콜 호출 과정">
+<meta property="og:url" content="https://jehwanyoo.net/2020/10/19/XV6%EC%9D%98-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%BD%9C-%ED%98%B8%EC%B6%9C-%EA%B3%BC%EC%A0%95/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="개요 교육용 OS로 개발된 XV6의 시스템 콜 호출 과정을 알아보겠습니다. 시스템 콜은 커널 작업을 안전하게 수행할 수 있게 유저에게 제공하는 OS API 입니다. 시스템 콜 정의  usys.S   SYSCALL(name) 매크로를 통해 name에 해당하는 시스템 콜을 정의합니다. movl $SYS_ ## name, $eax;는 syscall.h에 정의되어">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://i.ibb.co/FxqLWKv/image.png">
+<meta property="og:image" content="https://i.ibb.co/2yZNrND/image.png">
+<meta property="og:image" content="https://i.ibb.co/YNPxTn7/image.png">
+<meta property="og:image" content="https://i.ibb.co/tQVrbKm/image.png">
+<meta property="og:image" content="https://i.ibb.co/Nn41q76/image.png">
+<meta property="og:image" content="https://i.ibb.co/xSVWPwY/image.png">
+<meta property="og:image" content="https://i.ibb.co/mNGNmLx/image.png">
+<meta property="og:image" content="https://i.ibb.co/QmBPyy4/image.png">
+<meta property="og:image" content="https://i.ibb.co/VWW4nJj/image.png">
+<meta property="og:image" content="https://i.ibb.co/XFLDwrS/image.png">
+<meta property="og:image" content="https://i.ibb.co/pPpF655/System-Call.png">
+<meta property="article:published_time" content="2020-10-18T16:35:35.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:16:58.072Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="Operating System">
+<meta property="article:tag" content="System Call">
+<meta property="article:tag" content="XV6">
+<meta property="article:tag" content="Kernel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/FxqLWKv/image.png"> <link rel="canonical" href="https://jehwanyoo.net/2020/10/19/xv6의-시스템-콜-호출-과정/"/> 
+<title>XV6의 시스템 콜 호출 과정 | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">XV6의 시스템 콜 호출 과정</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">10월 19, 2020&nbsp;&nbsp;1:35:35</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Operating-System/">Operating System</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><hr>
+<p>교육용 OS로 개발된 XV6의 시스템 콜 호출 과정을 알아보겠습니다.</p>
+<p>시스템 콜은 커널 작업을 안전하게 수행할 수 있게 유저에게 제공하는 OS API 입니다.</p>
+<h2 id="시스템-콜-정의"><a href="#시스템-콜-정의" class="headerlink" title="시스템 콜 정의"></a>시스템 콜 정의</h2><hr>
+<blockquote>
+<p><strong>usys.S</strong></p>
+<p><img src="https://i.ibb.co/FxqLWKv/image.png" alt="usys.S"></p>
+</blockquote>
+<p><code>SYSCALL(name)</code> 매크로를 통해 <code>name</code>에 해당하는 시스템 콜을 정의합니다.</p>
+<p><code>movl $SYS_ ## name, $eax;</code>는 <code>syscall.h</code>에 정의되어 있는 <code>SYS_name</code>에 해당하는 번호를 <code>eax</code> 레지스터에 저장합니다.</p>
+<p>이 값은 나중에 시스템 콜 포인터 함수를 검색할 때 키 값으로 사용됩니다.</p>
+<p><sub>참고)) ##은 왼쪽 토큰을 오른쪽 토큰에 붙히는 명령어 입니다.</sub></p>
+<blockquote>
+<p><strong>syscall.h</strong></p>
+<p><img src="https://i.ibb.co/2yZNrND/image.png" alt="syscall.h"></p>
+</blockquote>
+<p><code>int $T_SYSCALL</code>는 시스템 콜 인터럽트를 발생시킵니다. </p>
+<p><code>T_SYSCALL</code> 상수는 <code>trap.h</code>에 정의 되어 있습니다.</p>
+<blockquote>
+<p><strong>trap.h</strong> </p>
+<p><img src="https://i.ibb.co/YNPxTn7/image.png" alt="trap.h"></p>
+</blockquote>
+<p>xv6에서 $T_SYSCALL은 64로 정의되어 있습니다.</p>
+<p><code>int $T_SYSCALL</code>는 64번째 벡터를 가리키게 됩니다.</p>
+<h2 id="IDT"><a href="#IDT" class="headerlink" title="IDT"></a>IDT</h2><hr>
+<blockquote>
+<p><strong>vectors.S</strong></p>
+<p><img src="https://i.ibb.co/tQVrbKm/image.png" alt="vectors.S"><br><img src="https://i.ibb.co/Nn41q76/image.png" alt="vectors.S"></p>
+</blockquote>
+<p><code>vectors.S</code>는 <code>vectors.pl</code>을 실행시키면 생성됩니다.</p>
+<p>이것은 <code>trap.c</code>에서 IDT를 초기화 할 때 사용됩니다.</p>
+<blockquote>
+<p><strong>IDT 초기화(trap.c)</strong></p>
+<p>IDT(Interupt Data Table)는 인터럽트의 정보가 담겨져 있는 테이블입니다.</p>
+<p><img src="https://i.ibb.co/xSVWPwY/image.png" alt="trap.c"></p>
+</blockquote>
+<p>IDT에는 <code>alltraps</code> 분기하는 코드가 있습니다.</p>
+<p><code>alltraps</code>의 정의는 <code>trapasm.S</code>에 있습니다.</p>
+<blockquote>
+<p><strong>trapasm.S</strong></p>
+<p><img src="https://i.ibb.co/mNGNmLx/image.png" alt="trapasm.S"></p>
+</blockquote>
+<p><code>alltraps</code>로 분기하게 되면 트랩에 필요한 스택 프레임을 쌓고 <code>call trap</code>을 실행합니다.</p>
+<h2 id="trap"><a href="#trap" class="headerlink" title="trap()"></a>trap()</h2><hr>
+<blockquote>
+<p><strong>trap.c</strong></p>
+<p><img src="https://i.ibb.co/QmBPyy4/image.png" alt="trap.c"></p>
+</blockquote>
+<p><code>trapframe</code> 구조체의 <code>trapno</code>(트랩 번호)를 확인하여 <code>T_SYSCALL</code>(64)이면 <code>syscall()</code>을 호출 합니다.</p>
+<h2 id="syscall"><a href="#syscall" class="headerlink" title="syscall()"></a>syscall()</h2><hr>
+<blockquote>
+<p><strong>syscall.c</strong></p>
+<p><img src="https://i.ibb.co/VWW4nJj/image.png" alt="syscall.c"></p>
+<p><img src="https://i.ibb.co/XFLDwrS/image.png" alt="syscall.c"></p>
+</blockquote>
+<p><code>syscall()</code>은 매핑된 함수 포인터를 호출합니다.</p>
+<p><code>defs.h</code> 헤더 파일에 <code>sys_</code> 함수들이 선언 되어 있고</p>
+<p>프로세스 관련 시스템 콜 정의는 <code>sysproc.c</code>, 파일 관련 시스템 콜 정의는 <code>sysfile.c</code>에 있습니다.</p>
+<h2 id="XV6-시스템-콜-요약"><a href="#XV6-시스템-콜-요약" class="headerlink" title="XV6 시스템 콜 요약"></a>XV6 시스템 콜 요약</h2><hr>
+<p><img src="https://i.ibb.co/pPpF655/System-Call.png" alt="system-call"></p>
+<h2 id="리눅스와의-차이"><a href="#리눅스와의-차이" class="headerlink" title="리눅스와의 차이"></a>리눅스와의 차이</h2><hr>
+<p>리눅스(2.4 버전)에서는 entry.S 파일에서 system call을 호출하는데, xv6는 syscall.c에서 호출합니다.</p>
+<h2 id="분석-커널"><a href="#분석-커널" class="headerlink" title="분석 커널"></a>분석 커널</h2><hr>
+<p><a target="_blank" rel="noopener" href="https://github.com/mit-pdos/xv6-public">mit-pdos/xv6-public</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Operating-System/"># Operating System</a>
+                    
+                        <a href="/tags/System-Call/"># System Call</a>
+                    
+                        <a href="/tags/XV6/"># XV6</a>
+                    
+                        <a href="/tags/Kernel/"># Kernel</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/10/19/Process-System-Call/">프로세스 핵심 시스템 콜을 알아보자 (fork, wait, exec, dup, dup2, pipe)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/10/02/%EB%AA%85%EB%A0%B9%ED%98%95-%EC%96%B8%EC%96%B4%EC%99%80-%EC%84%A0%EC%96%B8%ED%98%95-%EC%96%B8%EC%96%B4%EC%9D%98-%EC%B0%A8%EC%9D%B4/">명령형 언어와 선언형 언어의 차이</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

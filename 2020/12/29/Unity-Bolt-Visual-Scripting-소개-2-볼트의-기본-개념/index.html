@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="JeHwanYoo" />
+ 
+<meta name="subtitle" content="유제환의 프로그래밍 노트" />
+ 
+<meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
+ 
+<meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
+ <meta name="description" content="0. 개요 볼트의 기본 개념에 대해 알아보겠습니다. 1. 타입 (Types) 볼트에서 사용되는 모든 타입을 객체(Objects)로 다룹니다. 볼트는 이 타입들을 식별하기 좋게 시각적으로 아이콘을 제공합니다. 그래프를 구성할 때 아이콘끼리 호환이 되는 경우 연결이 가능합니다. 대표적인 타입은 링크에서 확인해주세요. 볼트의 타입 개념은 기존 Unity C# 스">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity Bolt Visual Scripting 소개 2 - 볼트의 기본 개념">
+<meta property="og:url" content="https://jehwanyoo.net/2020/12/29/Unity-Bolt-Visual-Scripting-%EC%86%8C%EA%B0%9C-2-%EB%B3%BC%ED%8A%B8%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B0%9C%EB%85%90/index.html">
+<meta property="og:site_name" content="JeHwan PL Note">
+<meta property="og:description" content="0. 개요 볼트의 기본 개념에 대해 알아보겠습니다. 1. 타입 (Types) 볼트에서 사용되는 모든 타입을 객체(Objects)로 다룹니다. 볼트는 이 타입들을 식별하기 좋게 시각적으로 아이콘을 제공합니다. 그래프를 구성할 때 아이콘끼리 호환이 되는 경우 연결이 가능합니다. 대표적인 타입은 링크에서 확인해주세요. 볼트의 타입 개념은 기존 Unity C# 스">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://i.ibb.co/3vjggJm/image.png">
+<meta property="og:image" content="https://i.ibb.co/hLcVHmF/foo.jpg">
+<meta property="article:published_time" content="2020-12-29T06:29:53.000Z">
+<meta property="article:modified_time" content="2021-07-16T10:16:58.072Z">
+<meta property="article:author" content="JeHwanYoo">
+<meta property="article:tag" content="Unity">
+<meta property="article:tag" content="Bolt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/3vjggJm/image.png"> <link rel="canonical" href="https://jehwanyoo.net/2020/12/29/unity-bolt-visual-scripting-소개-2-볼트의-기본-개념/"/> 
+<title>Unity Bolt Visual Scripting 소개 2 - 볼트의 기본 개념 | JeHwan PL Note</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="JeHwan PL Note" type="application/rss+xml">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">JeHwan PL Note</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">JeHwan PL Note</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/software">Software</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Unity Bolt Visual Scripting 소개 2 - 볼트의 기본 개념</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">JeHwanYoo</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">12월 29, 2020&nbsp;&nbsp;15:29:53</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Unity/">Unity</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="0-개요"><a href="#0-개요" class="headerlink" title="0. 개요"></a>0. 개요</h2><hr>
+<p>볼트의 기본 개념에 대해 알아보겠습니다.</p>
+<h2 id="1-타입-Types"><a href="#1-타입-Types" class="headerlink" title="1. 타입 (Types)"></a>1. 타입 (Types)</h2><hr>
+<p>볼트에서 사용되는 모든 타입을 객체(Objects)로 다룹니다.</p>
+<p>볼트는 이 타입들을 식별하기 좋게 시각적으로 아이콘을 제공합니다.</p>
+<p>그래프를 구성할 때 아이콘끼리 호환이 되는 경우 연결이 가능합니다.</p>
+<p>대표적인 타입은 <a target="_blank" rel="noopener" href="https://docs.unity3d.com/bolt/1.4/manual/bolt-types.html">링크</a>에서 확인해주세요.</p>
+<p>볼트의 타입 개념은 기존 Unity C# 스크립트에서 사용되었던 타입 개념과 유사합니다.</p>
+<blockquote>
+<p>대표적인 아이콘</p>
+<img src="https://i.ibb.co/3vjggJm/image.png" alt="icons" width="300">
+
+<p>위 아이콘들은 자주 등장하므로 기억해 두는 편이 좋습니다.</p>
+</blockquote>
+<h2 id="2-변수-Variables"><a href="#2-변수-Variables" class="headerlink" title="2. 변수 (Variables)"></a>2. 변수 (Variables)</h2><hr>
+<p>볼트에서 변수는 총 6가지로 구분 됩니다.</p>
+<p>아래로 갈 수록 변수의 스코프(scope)가 넓어집니다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">변수 종류</th>
+<th align="center">설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">플로우 변수 (Flow Variables)</td>
+<td align="center">같은 플로우내에서만 공유 할 수 있는 변수 (지역변수 개념)</td>
+</tr>
+<tr>
+<td align="center">그래프 변수 (Graph Variables)</td>
+<td align="center">같은 그래프 내부에서 모두 공유할 수 있는 변수</td>
+</tr>
+<tr>
+<td align="center">오브젝트 변수 (Object Variables)</td>
+<td align="center">같은 GameObject 내의 모든 그래프에서 공유하는 변수</td>
+</tr>
+<tr>
+<td align="center">씬 변수 (Scene Variables)</td>
+<td align="center">같은 Scene 내의 모든 모든 그래프에서 공유하는 변수</td>
+</tr>
+<tr>
+<td align="center">애플리케이션 변수 (Application Variables)</td>
+<td align="center">게임 시작부터 종료까지 모든 그래프에서 공유하는 변수</td>
+</tr>
+<tr>
+<td align="center">저장된 변수 (Saved Variables)</td>
+<td align="center">게임이 종료된 이후에도 <a target="_blank" rel="noopener" href="https://docs.unity3d.com/ScriptReference/PlayerPrefs.html">PlayerPrefs</a> 개념을 이용해 <br> 레지스트리에 저장하는 변수</td>
+</tr>
+</tbody></table>
+<p>Variables 레이아웃을 확인하면 새로운 변수를 생성하고 관리할 수 있습니다. </p>
+<p>Flow Variables 같은 경우엔 Flow를 생성하고 Graph 레이아웃에서 추가해줘야 합니다.</p>
+<h2 id="3-볼트의-구성-요소"><a href="#3-볼트의-구성-요소" class="headerlink" title="3. 볼트의 구성 요소"></a>3. 볼트의 구성 요소</h2><hr>
+<h3 id="3-1-그래프-Graphs"><a href="#3-1-그래프-Graphs" class="headerlink" title="3.1 그래프 (Graphs)"></a>3.1 그래프 (Graphs)</h3><hr>
+<p>그래프는 프로그램의 논리를 시각화한 것입니다.</p>
+<p>그래프는 플로우 그래프(Flow Graphs)와 상태 그래프(State Graphs)로 나뉩니다.</p>
+<h3 id="3-2-머신-Machines"><a href="#3-2-머신-Machines" class="headerlink" title="3.2 머신 (Machines)"></a>3.2 머신 (Machines)</h3><hr>
+<p>머신은 그래프의 내용을 실행하기 위해 게임 오브젝트(GameObject)에 부착하는 컴포넌트 입니다.</p>
+<p>머신은 플로우 머신(Flow Machines)과 상태 머신(State Machines)로 나뉩니다.</p>
+<p>상태 머신은 상태에 따라 오브젝트의 플로우가 달라져야하는 경우에 사용하고</p>
+<p>그렇지 않은 경우 플로우 머신을 사용하면 됩니다.</p>
+<p>처음에 상태 변이 딱히 기획되어 있지 않다면 그냥 플로우 머신으로 개발하셔도 무방합니다.</p>
+<p>만약 나중에 상태 변이가 필요할 때 상태 머신으로 바꾸는 일은 어렵지 않습니다.</p>
+<h3 id="3-2-플로우-그래프-Flow-Graphs"><a href="#3-2-플로우-그래프-Flow-Graphs" class="headerlink" title="3.2 플로우 그래프 (Flow Graphs)"></a>3.2 플로우 그래프 (Flow Graphs)</h3><hr>
+<p>플로우 그래프는 저급 레벨(low-level)의 논리를 실행하기 위해 사용됩니다.</p>
+<p>실제로 이벤트가 발생했을 때, 어떻게, 어떤 순서로 논리가 진행되어야 하는지를 구성합니다.</p>
+<p>따라서, 분기(branching), 반복(loop), 수학적 계산 등이 있을 것 입니다.</p>
+<h3 id="3-3-상태-State-Graphs"><a href="#3-3-상태-State-Graphs" class="headerlink" title="3.3 상태 (State Graphs)"></a>3.3 상태 (State Graphs)</h3><hr>
+<p>상태 그래프는 고급 레벨(high-level)의 논리를 실행하기 위해 사용됩니다.</p>
+<p>“면역 상태”, “공격 불가”,  “회복 불가” 와 같은 추상적인 개념을 정의할 수 있습니다.</p>
+<p>이때 중요한 개념은 트랜지션(Transitions)입니다.</p>
+<p>트랜지션은 어떤 특정 조건을 만족했을때 다른 상태로 넘어가는 것을 말합니다.</p>
+<p>예를 들면,  ‘캐릭터가 “공격 가능” 상태에서 어떤 조건을 만족하면 “공격 불가” 상태가 된다’와 같은 트랜지션을 정의할 수 있습니다.</p>
+<p>상태 그래프는 앞서 언급했듯이 고급 레벨 스크립팅이기 때문에 내부적으로는 플로우 그래프가 필요합니다.</p>
+<h3 id="3-4-임베드-매크로-Embeds-Macros"><a href="#3-4-임베드-매크로-Embeds-Macros" class="headerlink" title="3.4 임베드, 매크로 (Embeds, Macros)"></a>3.4 임베드, 매크로 (Embeds, Macros)</h3><hr>
+<p>모든 그래프는 임베드 그래프와 매크로 그래프로 나눌 수 있습니다.</p>
+<p>임베드 그래프는 부착된 머신에서만 사용되며 재활용이 불가능 합니다.</p>
+<p>매크로 그래프는 여러 머신에서 함께 사용할 수 있으며 재활용이 가능합니다.</p>
+<p>임베드, 매크로 그래프는 서로 전환될 수 있습니다.</p>
+<p>각각의 주의사항은 해당 <a target="_blank" rel="noopener" href="https://docs.unity3d.com/bolt/1.4/manual/bolt-graphs-machines-macros.html">문서</a>를 참고해주세요.</p>
+<h4 id="3-4-1-매크로에서-임베드로"><a href="#3-4-1-매크로에서-임베드로" class="headerlink" title="3.4.1 매크로에서 임베드로"></a>3.4.1 매크로에서 임베드로</h4><hr>
+<p>몬스터의 행동을 매크로로 정의해놨지만, </p>
+<p>특정 몬스터에서 고유의 움직임을 구현하고 싶은 경우 </p>
+<p>해당 매크로를 임베드로 변환하여 독립적인 그래프를 생성할 수 있습니다.</p>
+<h4 id="3-4-2-임베드에서-매크로로"><a href="#3-4-2-임베드에서-매크로로" class="headerlink" title="3.4.2 임베드에서 매크로로"></a>3.4.2 임베드에서 매크로로</h4><hr>
+<p>특정 몬스터의 고유한 움직임을 다른 몬스터에게도 적용하고 싶을 때</p>
+<p>해당 임베드를 매크로로 전환하여 같은 움직임의 그래프를 사용할 수 있습니다.</p>
+<h2 id="4-그룹-Groups"><a href="#4-그룹-Groups" class="headerlink" title="4. 그룹 (Groups)"></a>4. 그룹 (Groups)</h2><img src="https://i.ibb.co/hLcVHmF/foo.jpg" alt="groups" width="500">
+
+<p>컨트롤을 누르고 원하는 영역을 드래그하면 해당 유닛들이 어떤 역할을 하는지 그룹으로 정의 할 수 있습니다.</p>
+<p>그룹으로 지정한 뒤 그룹 이동을 하면 연결된 플로우가 모두 함께 이동합니다.</p>
+<h2 id="참고자료"><a href="#참고자료" class="headerlink" title="참고자료"></a>참고자료</h2><p><a target="_blank" rel="noopener" href="https://docs.unity3d.com/bolt/1.4/manual/bolt-concepts.html">Basic Concept | Bolt Visual Scripting</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>JeHwanYoo</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Unity/"># Unity</a>
+                    
+                        <a href="/tags/Bolt/"># Bolt</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">(mac) NGINX Tutorial #1 - NGINX 설치</a>
+            
+            
+            <a class="next" rel="next" href="/2020/12/29/Unity-Bolt-Visual-Scripting-%EC%86%8C%EA%B0%9C-1-%EC%84%A4%EC%B9%98%EC%99%80-%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EC%84%A4%EC%A0%95/">Unity Bolt Visual Scripting 소개 1 - 설치와 레이아웃 설정</a>
+            
+        </section>
+        <section style="margin-top: 4rem;">
+            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jehwanyoo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </section>
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© JeHwanYoo | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
