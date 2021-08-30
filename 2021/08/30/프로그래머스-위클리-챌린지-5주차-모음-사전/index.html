@@ -15,29 +15,19 @@
 <meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
  
 <meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
- <meta name="description" content="Node.js 다운로드 페이지에 방문합니다.  패키지 관리자를 통한 Node.js 설치 를 선택합니다.  데비안과 우분투 기반... 을 선택합니다.  Debian and Ubuntu based distributions - Installation Instruction 탭에 이동하여 원하는 버전의 커맨드를 복사합니다. 저는 LTS버전인 v14.x를 선택하겠습니">
+ <meta name="description" content="링크: https:&#x2F;&#x2F;programmers.co.kr&#x2F;learn&#x2F;courses&#x2F;30&#x2F;lessons&#x2F;84512 문제 설명사전에 알파벳 모음 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 “A”이고, 그다음은 “AA”이며, 마지막 단어는 “UUUUU”입니다. 단어">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)">
-<meta property="og:url" content="https://jehwanyoo.net/2021/07/16/Ubuntu-Node-js-%EC%84%A4%EC%B9%98%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-n-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98%EA%B9%8C%EC%A7%80/index.html">
+<meta property="og:title" content="[프로그래머스 위클리 챌린지 5주차] 모음 사전1">
+<meta property="og:url" content="https://jehwanyoo.net/2021/08/30/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9C%84%ED%81%B4%EB%A6%AC-%EC%B1%8C%EB%A6%B0%EC%A7%80-5%EC%A3%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84/index.html">
 <meta property="og:site_name" content="JeHwan PL Note">
-<meta property="og:description" content="Node.js 다운로드 페이지에 방문합니다.  패키지 관리자를 통한 Node.js 설치 를 선택합니다.  데비안과 우분투 기반... 을 선택합니다.  Debian and Ubuntu based distributions - Installation Instruction 탭에 이동하여 원하는 버전의 커맨드를 복사합니다. 저는 LTS버전인 v14.x를 선택하겠습니">
+<meta property="og:description" content="링크: https:&#x2F;&#x2F;programmers.co.kr&#x2F;learn&#x2F;courses&#x2F;30&#x2F;lessons&#x2F;84512 문제 설명사전에 알파벳 모음 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 “A”이고, 그다음은 “AA”이며, 마지막 단어는 “UUUUU”입니다. 단어">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://i.ibb.co/FWr8dg4/Untitled.png">
-<meta property="og:image" content="https://i.ibb.co/JjN74Wr/Untitled-1.png">
-<meta property="og:image" content="https://i.ibb.co/f4JyXXg/Untitled-2.png">
-<meta property="og:image" content="https://i.ibb.co/SnV0kS5/Untitled-3.png">
-<meta property="og:image" content="https://i.ibb.co/pXJXV0x/Untitled-4.png">
-<meta property="og:image" content="https://i.ibb.co/LhSn8nb/Untitled-5.png">
-<meta property="og:image" content="https://i.ibb.co/TYqTMLT/Untitled-6.png">
-<meta property="og:image" content="https://i.ibb.co/qCCdQbf/Untitled-7.png">
-<meta property="article:published_time" content="2021-07-16T10:35:59.000Z">
-<meta property="article:modified_time" content="2021-07-16T10:39:20.931Z">
+<meta property="article:published_time" content="2021-08-30T09:56:30.000Z">
+<meta property="article:modified_time" content="2021-08-30T10:13:50.952Z">
 <meta property="article:author" content="JeHwanYoo">
-<meta property="article:tag" content="Node.js">
-<meta property="article:tag" content="Ubuntu">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.ibb.co/FWr8dg4/Untitled.png"> <link rel="canonical" href="https://jehwanyoo.net/2021/07/16/ubuntu-node-js-설치하고-관리하기-n-모듈-설치까지/"/> 
-<title>[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지) | JeHwan PL Note</title>
+<meta property="article:tag" content="Algorithms">
+<meta name="twitter:card" content="summary"> <link rel="canonical" href="https://jehwanyoo.net/2021/08/30/프로그래머스-위클리-챌린지-5주차-모음-사전/"/> 
+<title>[프로그래머스 위클리 챌린지 5주차] 모음 사전1 | JeHwan PL Note</title>
 
  
 <link rel="icon" href="/favicon.ico" />
@@ -188,7 +178,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)</h1>
+            <h1 class="post-title">[프로그래머스 위클리 챌린지 5주차] 모음 사전1</h1>
             
                 <div class="post-meta">
                     
@@ -197,14 +187,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">7월 16, 2021&nbsp;&nbsp;19:35:59</a>
+                        Date: <a href="#">8월 30, 2021&nbsp;&nbsp;18:56:30</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Node-js/">Node.js</a>
+                                <a href="/categories/Algorithms/">Algorithms</a>
                             
                         </span>
                     
@@ -213,41 +203,17 @@
         </header>
 
         <div class="post-content">
-            <p><a target="_blank" rel="noopener" href="https://nodejs.org/ko/download/">Node.js 다운로드</a> 페이지에 방문합니다.</p>
-<p><img src="https://i.ibb.co/FWr8dg4/Untitled.png" alt="download"></p>
-<p><code>패키지 관리자를 통한 Node.js 설치</code> 를 선택합니다.</p>
-<p><img src="https://i.ibb.co/JjN74Wr/Untitled-1.png" alt="Node.js Download - 2"></p>
-<p><code>데비안과 우분투 기반...</code> 을 선택합니다.</p>
-<p><img src="https://i.ibb.co/f4JyXXg/Untitled-2.png" alt="Node.js Download - 3"></p>
-<p><code>Debian and Ubuntu based distributions</code> - <code>Installation Instruction</code> 탭에 이동하여 원하는 버전의 커맨드를 복사합니다.</p>
-<p>저는 LTS버전인 v14.x를 선택하겠습니다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Using Ubuntu</span></span><br><span class="line">$ curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+            <p>링크: <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/84512">https://programmers.co.kr/learn/courses/30/lessons/84512</a></p>
+<h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>사전에 알파벳 모음 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 “A”이고, 그다음은 “AA”이며, 마지막 단어는 “UUUUU”입니다.</p>
+<p>단어 하나 word가 매개변수로 주어질 때, 이 단어가 사전에서 몇 번째 단어인지 return 하도록 solution 함수를 완성해주세요.</p>
+<h2 id="제한사항"><a href="#제한사항" class="headerlink" title="제한사항"></a>제한사항</h2><p>word의 길이는 1 이상 5 이하입니다.<br>word는 알파벳 대문자 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’로만 이루어져 있습니다.</p>
+<h2 id="아이디어"><a href="#아이디어" class="headerlink" title="아이디어"></a>아이디어</h2><p>이 문제를 보고나서 분명 수학적 관계가 있을거라고는 생각했다.</p>
+<p>하지만 그 규칙을 찾는것이 어려웠기 때문에 완전 탐색으로 풀기로 했다.</p>
+<h2 id="풀이"><a href="#풀이" class="headerlink" title="풀이"></a>풀이</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> alphabet = [<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;E&#x27;</span>, <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;O&#x27;</span>, <span class="string">&#x27;U&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> wordIndex = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">let</span> wordLength = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> index = <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> concat = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">findWord</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (wordIndex[<span class="number">0</span>] !== <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (wordLength === <span class="number">5</span>) &#123;</span><br><span class="line">      <span class="keyword">while</span> (wordIndex[wordLength] === <span class="number">4</span>) &#123;</span><br><span class="line">        wordIndex[wordLength] = <span class="number">0</span></span><br><span class="line">        wordLength--</span><br><span class="line">        concat.pop()</span><br><span class="line">      &#125;</span><br><span class="line">      wordIndex[wordLength]++</span><br><span class="line">      concat.pop()</span><br><span class="line">      concat.push(alphabet[wordIndex[wordLength]])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      concat.push(alphabet[wordIndex[++wordLength]])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (concat.join(<span class="string">&#x27;&#x27;</span>) === findWord) &#123;</span><br><span class="line">      <span class="keyword">return</span> index</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      index++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">solution</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> find(word)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://i.ibb.co/SnV0kS5/Untitled-3.png" alt="Node.js Download - 4"></p>
-<p><code>node --version</code> 커맨드를 입력해보면 정상적으로 설치 되었음을 알 수 있습니다.</p>
-<h2 id="Node-js-버전-관리-및-전환"><a href="#Node-js-버전-관리-및-전환" class="headerlink" title="Node.js 버전 관리 및 전환"></a>Node.js 버전 관리 및 전환</h2><p><img src="https://i.ibb.co/pXJXV0x/Untitled-4.png" alt="Node.js Download - 5"></p>
-<p><code>n</code> 은 node.js 버전 관리를 매우 쉽게 만들어주는 프로그램입니다.</p>
-<p>n 패키지를 -g 플래그로 전역에 설치해도 되지만, 저 같은 경우 npx 커맨드를 선호하는 편입니다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ npx n --lts</span><br><span class="line"></span><br><span class="line">npx: installed 1 <span class="keyword">in</span> 0.551s</span><br><span class="line">14.17.0</span><br></pre></td></tr></table></figure>
-
-<p>위 커맨드를 입력하면 현재 node.js의 lts 버전이 출력됩니다.</p>
-<p>lts 버전은 이미 설치했으니 latest 버전을 설치해봅시다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ npx n --latest</span><br><span class="line"></span><br><span class="line">npx: installed 1 <span class="keyword">in</span> 0.472s</span><br><span class="line">16.2.0</span><br><span class="line"></span><br><span class="line">$ sudo npx n latest</span><br></pre></td></tr></table></figure>
-
-<p>위 커맨드에서도 알 수 있듯이 <code>npx --name</code> 은 해당 버전 정보를 <code>npx name</code> 은 실제 설치를 진행합니다. 전역에 설치하기 때문에 만약 루트 권한이 없다면 sudo를 함께 사용합니다.</p>
-<p><img src="https://i.ibb.co/LhSn8nb/Untitled-5.png" alt="Node.js Download - 6"></p>
-<p>설치 직후에는 최근 설치 node로 alias되어 있습니다.</p>
-<p>설치된 node 목록을 확인해봅시다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npx n ls</span><br><span class="line"></span><br><span class="line">node/16.2.0</span><br></pre></td></tr></table></figure>
-
-<p>어라? LTS로 설치한 14버전이 없군요. 그렇습니다. n으로 설치된 버전만 리스트에 나오게 됩니다.</p>
-<p>따라서 이미 14버전을 설치하셨더라도 다시 한번 n으로 14버전을 설치해주세요. 그래야 버전 전환이 원할하겠죠.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npx n lts</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.ibb.co/TYqTMLT/Untitled-6.png" alt="Node.js Download - 7"></p>
-<p>전환하려면 n lts, n stable, n [version]등을 입력합니다. (이미 설치된 경우 다시 설치하지 않고 전환이 되는 원리입니다.)</p>
-<p>아니면, n 커맨드만 입력해서 방향키로 전환이 가능합니다.</p>
-<p><img src="https://i.ibb.co/qCCdQbf/Untitled-7.png" alt="Node.js Download - 8"></p>
+<p>그냥 A, AA, AAA, …, UUUUU 까지 전부 대조해보는 방식이다.</p>
+<p>경우의 수가 얼마 없기 때문에 시간 복잡도는 크지 않다.</p>
+<p>다른 사람의 풀이를 확인해보니 역시 수식으로 풀 수 있는 방법이 있더라…</p>
 
         </div>
 
@@ -276,9 +242,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Node-js/"># Node.js</a>
-                    
-                        <a href="/tags/Ubuntu/"># Ubuntu</a>
+                        <a href="/tags/Algorithms/"># Algorithms</a>
                     
                         
                 </span>
@@ -291,10 +255,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/08/30/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9C%84%ED%81%B4%EB%A6%AC-%EC%B1%8C%EB%A6%B0%EC%A7%80-5%EC%A3%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84/">[프로그래머스 위클리 챌린지 5주차] 모음 사전1</a>
             
-            
-            <a class="next" rel="next" href="/2021/05/21/NPM%EC%97%90-%EC%9E%88%EB%8A%94-%EB%AA%A8%EB%93%88-%EB%A7%98%EB%8C%80%EB%A1%9C-%EC%8D%A8%EB%8F%84-%EB%90%A0%EA%B9%8C/">NPM에 있는 모듈 맘대로 써도 될까?</a>
+            <a class="next" rel="next" href="/2021/07/16/Ubuntu-Node-js-%EC%84%A4%EC%B9%98%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-n-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98%EA%B9%8C%EC%A7%80/">[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)</a>
             
         </section>
         <section style="margin-top: 4rem;">

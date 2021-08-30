@@ -9,8 +9,35 @@
     <atom:link href="https://jehwanyoo.net/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다.</description>
-    <pubDate>Fri, 16 Jul 2021 10:39:20 GMT</pubDate>
+    <pubDate>Mon, 30 Aug 2021 10:13:50 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>[프로그래머스 위클리 챌린지 5주차] 모음 사전1</title>
+      <link>https://jehwanyoo.net/2021/08/30/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9C%84%ED%81%B4%EB%A6%AC-%EC%B1%8C%EB%A6%B0%EC%A7%80-5%EC%A3%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84/</link>
+      <guid>https://jehwanyoo.net/2021/08/30/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9C%84%ED%81%B4%EB%A6%AC-%EC%B1%8C%EB%A6%B0%EC%A7%80-5%EC%A3%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84/</guid>
+      <pubDate>Mon, 30 Aug 2021 09:56:30 GMT</pubDate>
+      
+        
+        
+      <description>&lt;p&gt;링크: &lt;a href=&quot;https://programmers.co.kr/learn/courses/30/lessons/84512&quot;&gt;https://programmers.co.kr/learn/courses/30/lessons/84512&lt;/a&gt;&lt;/p&gt;
+&lt;</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<p>링크: <a href="https://programmers.co.kr/learn/courses/30/lessons/84512">https://programmers.co.kr/learn/courses/30/lessons/84512</a></p><h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>사전에 알파벳 모음 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 “A”이고, 그다음은 “AA”이며, 마지막 단어는 “UUUUU”입니다.</p><p>단어 하나 word가 매개변수로 주어질 때, 이 단어가 사전에서 몇 번째 단어인지 return 하도록 solution 함수를 완성해주세요.</p><h2 id="제한사항"><a href="#제한사항" class="headerlink" title="제한사항"></a>제한사항</h2><p>word의 길이는 1 이상 5 이하입니다.<br>word는 알파벳 대문자 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’로만 이루어져 있습니다.</p><h2 id="아이디어"><a href="#아이디어" class="headerlink" title="아이디어"></a>아이디어</h2><p>이 문제를 보고나서 분명 수학적 관계가 있을거라고는 생각했다.</p><p>하지만 그 규칙을 찾는것이 어려웠기 때문에 완전 탐색으로 풀기로 했다.</p><h2 id="풀이"><a href="#풀이" class="headerlink" title="풀이"></a>풀이</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> alphabet = [<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;E&#x27;</span>, <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;O&#x27;</span>, <span class="string">&#x27;U&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> wordIndex = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">let</span> wordLength = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> index = <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> concat = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">findWord</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (wordIndex[<span class="number">0</span>] !== <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (wordLength === <span class="number">5</span>) &#123;</span><br><span class="line">      <span class="keyword">while</span> (wordIndex[wordLength] === <span class="number">4</span>) &#123;</span><br><span class="line">        wordIndex[wordLength] = <span class="number">0</span></span><br><span class="line">        wordLength--</span><br><span class="line">        concat.pop()</span><br><span class="line">      &#125;</span><br><span class="line">      wordIndex[wordLength]++</span><br><span class="line">      concat.pop()</span><br><span class="line">      concat.push(alphabet[wordIndex[wordLength]])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      concat.push(alphabet[wordIndex[++wordLength]])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (concat.join(<span class="string">&#x27;&#x27;</span>) === findWord) &#123;</span><br><span class="line">      <span class="keyword">return</span> index</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      index++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">solution</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> find(word)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>그냥 A, AA, AAA, …, UUUUU 까지 전부 대조해보는 방식이다.</p><p>경우의 수가 얼마 없기 때문에 시간 복잡도는 크지 않다.</p><p>다른 사람의 풀이를 확인해보니 역시 수식으로 풀 수 있는 방법이 있더라…</p>]]></content:encoded>
+      
+      
+      <category domain="https://jehwanyoo.net/categories/Algorithms/">Algorithms</category>
+      
+      
+      <category domain="https://jehwanyoo.net/tags/Algorithms/">Algorithms</category>
+      
+      
+      <comments>https://jehwanyoo.net/2021/08/30/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9C%84%ED%81%B4%EB%A6%AC-%EC%B1%8C%EB%A6%B0%EC%A7%80-5%EC%A3%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)</title>
@@ -122,34 +149,6 @@
       
       
       <comments>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>(mac) NGINX Tutorial #3 - MariaDB 설치</title>
-      <link>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/</link>
-      <guid>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/</guid>
-      <pubDate>Sat, 10 Apr 2021 12:13:12 GMT</pubDate>
-      
-        
-        
-      <description>&lt;h2 id=&quot;이전-강의&quot;&gt;&lt;a href=&quot;#이전-강의&quot; class=&quot;headerlink&quot; title=&quot;이전 강의&quot;&gt;&lt;/a&gt;이전 강의&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutori</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<h2 id="이전-강의"><a href="#이전-강의" class="headerlink" title="이전 강의"></a>이전 강의</h2><p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">NGINX Tutorial #1 - NGINX 설치</a></p><p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-2-PHP-%EC%84%A4%EC%B9%98/">NGINX Tutorial #2 - PHP 설치</a></p><h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>이번 튜토리얼에선 DBMS의 하나인 MariaDB를 설치해봅시다. MariaDB는 MySQL에서 나와 독자노선을 걷고 있는 DBMS라는데 MySQL의 상위호환이 가능하고 많은 벤치 결과에서 MySQL보다 좋다는 의견이 있네요.  🙂</p><h2 id="mariadb-설치"><a href="#mariadb-설치" class="headerlink" title="mariadb 설치"></a>mariadb 설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mariadb</span><br></pre></td></tr></table></figure><p>역시 brew로 설치해줍니다.</p><h2 id="패스워드-설정"><a href="#패스워드-설정" class="headerlink" title="패스워드 설정"></a>패스워드 설정</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysqladmin -u 계정 -p password <span class="string">&#x27;비밀번호&#x27;</span></span><br></pre></td></tr></table></figure><p>우선 계정에 root를 넣어 root 패스워드를 변경합니다.</p><p><code>sudo mysql -u root -p password &#39;비밀번호&#39;</code></p><h2 id="mariadb-실행"><a href="#mariadb-실행" class="headerlink" title="mariadb 실행"></a>mariadb 실행</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew services start mariadb</span><br></pre></td></tr></table></figure><h2 id="mariadb-로그인"><a href="#mariadb-로그인" class="headerlink" title="mariadb 로그인"></a>mariadb 로그인</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p 또는</span><br><span class="line">mariadb -u root -p</span><br></pre></td></tr></table></figure><p>mysql, mariadb 둘다 동일하게 mariadb를 실행합니다.</p>]]></content:encoded>
-      
-      
-      <category domain="https://jehwanyoo.net/categories/NGINX/">NGINX</category>
-      
-      
-      <category domain="https://jehwanyoo.net/tags/NGINX/">NGINX</category>
-      
-      <category domain="https://jehwanyoo.net/tags/MariaDB/">MariaDB</category>
-      
-      
-      <comments>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/#disqus_thread</comments>
       
     </item>
     
