@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jehwanyoo.net/2021/09/03/DOM-API-%ED%95%B5%EC%8B%AC-%EC%9A%94%EC%95%BD-%EC%A0%95%EB%A6%AC/</loc>
+    
+    <lastmod>2021-09-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jehwanyoo.net/2021/09/03/MVC%EC%99%80-MVVM%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/</loc>
     
     <lastmod>2021-09-03</lastmod>
@@ -418,6 +425,13 @@
   
   <url>
     <loc>https://jehwanyoo.net/tags/MVVM/</loc>
+    <lastmod>2021-09-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jehwanyoo.net/tags/DOM-API/</loc>
     <lastmod>2021-09-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
