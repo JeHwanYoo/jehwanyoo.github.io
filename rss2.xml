@@ -9,8 +9,39 @@
     <atom:link href="https://jehwanyoo.net/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다.</description>
-    <pubDate>Mon, 30 Aug 2021 10:13:50 GMT</pubDate>
+    <pubDate>Fri, 03 Sep 2021 08:22:01 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>MVC와 MVVM에 대한 고찰</title>
+      <link>https://jehwanyoo.net/2021/09/03/MVC%EC%99%80-MVVM%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/</link>
+      <guid>https://jehwanyoo.net/2021/09/03/MVC%EC%99%80-MVVM%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/</guid>
+      <pubDate>Fri, 03 Sep 2021 08:20:24 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h2 id=&quot;개요&quot;&gt;&lt;a href=&quot;#개요&quot; class=&quot;headerlink&quot; title=&quot;개요&quot;&gt;&lt;/a&gt;개요&lt;/h2&gt;&lt;p&gt;MVC와 MVVM에 대해 고찰을 해보자.&lt;/p&gt;
+&lt;h2 id=&quot;MVC&quot;&gt;&lt;a href=&quot;#MVC&quot; class=&quot;headerli</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>MVC와 MVVM에 대해 고찰을 해보자.</p><h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>Model, View, Controller로 이루어진 디자인 패턴이다.</p><p>Controller에서 모든 Action을 처리하고 View, Controller에 Command를 날린다.</p><p>이렇게 되면 하나의 컨트롤러가 다수의 View와 Model을 처리하게 된다.</p><h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>Model, View, ViewModel로 이루어진 디자인 패턴이다.</p><p>View에서 Action을 처리하고 ViewModel로 Command를 날린다.</p><p>View는 ViewModel의 Data에 Binding을 한다.</p><p>이때, 1-way binding 또는 2-way binding을 선택할 수 있다.</p><p>ViewModel은 Command를 받았을 때 Model과 통신하여 Data를 갱신한다.</p><p>관찰자(Observer)인 View는 ViewModel로 부터 갱신에 대한 Notify를 받는다. (Observer Pattern)</p><h2 id="웹-프론트엔드는-태생적으로-MVVM-패턴이-적합하다"><a href="#웹-프론트엔드는-태생적으로-MVVM-패턴이-적합하다" class="headerlink" title="웹 프론트엔드는 태생적으로 MVVM 패턴이 적합하다"></a>웹 프론트엔드는 태생적으로 MVVM 패턴이 적합하다</h2><p>우선 프론트라는 영역은 사용자(User)가 직접적으로 맞닿는 곳이다.</p><p>따라서, 보통 GUI를 통해 다양한 이벤트를 처리하게 된다.</p><p>이때 GUI 요소는 Action을 처리하는 부분이라 볼 수 있는데,</p><p>이를 Controller가 아닌 View의 관점으로 생각해야 자연스럽다.</p><p>JavaScript의 경우 비동기 처리가 강점이 아닌가?</p><p>옵저버 패턴을 구현하기에 매우 적합한 언어다.</p><h2 id="MVC는-어디에"><a href="#MVC는-어디에" class="headerlink" title="MVC는 어디에?"></a>MVC는 어디에?</h2><p>Node.js의 express 같은 mvc 프레임워크를 생각해보자.</p><p>우선 클라이언트(유저) 입장에서 서버에 접속할 때 GUI를 사용하지 않는다.</p><p>이때 클라이언트가 맞닿는 부분을 Controller로 해석하는 것이 올바르다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://jehwanyoo.net/categories/Design-Pattern/">Design Pattern</category>
+      
+      
+      <category domain="https://jehwanyoo.net/tags/Design-Pattern/">Design Pattern</category>
+      
+      <category domain="https://jehwanyoo.net/tags/MVC/">MVC</category>
+      
+      <category domain="https://jehwanyoo.net/tags/MVVM/">MVVM</category>
+      
+      
+      <comments>https://jehwanyoo.net/2021/09/03/MVC%EC%99%80-MVVM%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>[프로그래머스 위클리 챌린지 5주차] 모음 사전1</title>
@@ -121,34 +152,6 @@
       
       
       <comments>https://jehwanyoo.net/2021/05/19/%EC%A2%8B%EC%9D%80-REST-API-%EC%84%A4%EA%B3%84-%EB%B0%A9%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
-      <title>(mac) NGINX Tutorial #4 - PHPMyAdmin 설치</title>
-      <link>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/</link>
-      <guid>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/</guid>
-      <pubDate>Sat, 10 Apr 2021 13:57:20 GMT</pubDate>
-      
-        
-        
-      <description>&lt;h2 id=&quot;이전-강의&quot;&gt;&lt;a href=&quot;#이전-강의&quot; class=&quot;headerlink&quot; title=&quot;이전 강의&quot;&gt;&lt;/a&gt;이전 강의&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutori</description>
-        
-      
-      
-      
-      <content:encoded><![CDATA[<h2 id="이전-강의"><a href="#이전-강의" class="headerlink" title="이전 강의"></a>이전 강의</h2><p><a href="https://jehwanyoo.net/2021/04/06/mac-NGINX-Tutorial-1-NGINX-%EC%84%A4%EC%B9%98/">NGINX Tutorial #1 - NGINX 설치</a></p><p><a href="https://jehwanyoo.net/archives/">NGINX Tutorial #2 - PHP 설치</a></p><p><a href="https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-3-MariaDB-%EC%84%A4%EC%B9%98/">NGINX Tutorial #3 - MariaDB 설치</a></p><h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>이 튜토리얼은 반드시 이전 MariaDB를 설치하고 진행해주세요.</p><h2 id="PHPMyAdmin-설치"><a href="#PHPMyAdmin-설치" class="headerlink" title="PHPMyAdmin 설치"></a>PHPMyAdmin 설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install phpmyadmin</span><br></pre></td></tr></table></figure><p>brew로 phpmyadmin을 설치해줍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The configuration file is /opt/homebrew/etc/phpmyadmin.config.inc.php</span><br></pre></td></tr></table></figure><p>brew 설치가 완료되면 config 파일의 위치를 알려줍니다.</p><p>그리고 저희는 Apache가 아니라 NGINX이므로 NGINX 방식으로 디렉터리를 설정해야겠습니다.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Alias /phpmyadmin /opt/homebrew/share/phpmyadmin</span><br><span class="line">&lt;Directory /opt/homebrew/share/phpmyadmin/&gt;</span><br><span class="line">    Options Indexes FollowSymLinks MultiViews</span><br><span class="line">    AllowOverride All</span><br><span class="line">    &lt;IfModule mod_authz_core.c&gt;</span><br><span class="line">        Require all granted</span><br><span class="line">    &lt;/IfModule&gt;</span><br><span class="line">    &lt;IfModule !mod_authz_core.c&gt;</span><br><span class="line">        Order allow,deny</span><br><span class="line">        Allow from all</span><br><span class="line">    &lt;/IfModule&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure><p>위와 유사한 방식을 NGINX로 구현하면</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /opt/homebrew/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure><p>(brew로 설치한 경우) nginx.conf 파일 위치를 모르겠으면? brew info nginx를 입력하면 위치가 나온다.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">...</span><br><span class="line">location /phpmyadmin &#123;</span><br><span class="line">root    /opt/homebrew/share;</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">fastcgi_index  index.php;</span><br><span class="line">fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_na    me;</span><br><span class="line">include        fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>php를 찾는 경로가 전역에서는 web root이기 때문에 /phpmyadmin으로 들어오는 경로에 대해서는 다른 php 위치 룰을 적용했습니다.</p><h2 id="NGINX-재시작-후-Setup"><a href="#NGINX-재시작-후-Setup" class="headerlink" title="NGINX 재시작 후 Setup"></a>NGINX 재시작 후 Setup</h2><p>우선 nginx를 재시작해줍니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services restart nginx</span><br></pre></td></tr></table></figure><p>그런 뒤 <a href="http://localhost/phpmyadmin%EC%97%90">http://localhost/phpmyadmin에</a> 접속해봅시다.</p><h2 id="접속-확인"><a href="#접속-확인" class="headerlink" title="접속 확인"></a>접속 확인</h2><p><img src="https://i.ibb.co/Y8cxzMZ/2021-04-10-10-40-24.png" alt="https://i.ibb.co/Y8cxzMZ/2021-04-10-10-40-24.png"></p><p>DB계정으로 로그인하면 접속이 가능합니다.</p><h2 id="Waring-Error-지우기"><a href="#Waring-Error-지우기" class="headerlink" title="Waring, Error 지우기"></a>Waring, Error 지우기</h2><p><img src="https://i.ibb.co/LgFcVxY/2021-04-10-10-43-37.png" alt="https://i.ibb.co/LgFcVxY/2021-04-10-10-43-37.png"></p><p>처음 설치하면 warning이나 Error가 뜹니다. 실제로 문제가 발생할 수도 있으니 발생한 오류들은 모두 제거해줍시다.</p><p>가장 위의 에러는 여기를 클릭하고 하라는대로 하면 해결됩니다.</p><p>그 다음으로,</p><p><code>이제 설정 파일은 암호화 문자열(blowfish_secret)을 필요로 합니다.</code></p><p>같은 경우 config 파일을 열고 blowfish_secret 항목을 작성합니다.</p><p>최소 32자 이상이여야 합니다.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/homebrew/etc/phpmyadmin.config.inc.php</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * This is needed for cookie based authentication to encrypt password in</span><br><span class="line"> * cookie. Needs to be 32 chars long.</span><br><span class="line"> */</span><br><span class="line">$cfg[&#x27;blowfish_secret&#x27;] = &#x27;&#x27;; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */</span><br></pre></td></tr></table></figure><p>아무거나 넣어도 되지만, 기왕이면 랜덤으로 생성해봅시다. <a href="http://www.unit-conversion.info/texttools/random-string-generator/">링크</a></p><p><img src="https://i.ibb.co/cbqxQ21/2021-04-10-10-53-03.png" alt="https://i.ibb.co/cbqxQ21/2021-04-10-10-53-03.png"></p><p>그러면 오류가 사라집니다.</p><p>완료!</p>]]></content:encoded>
-      
-      
-      <category domain="https://jehwanyoo.net/categories/NGINX/">NGINX</category>
-      
-      
-      <category domain="https://jehwanyoo.net/tags/NGINX/">NGINX</category>
-      
-      <category domain="https://jehwanyoo.net/tags/PHPMyAdmin/">PHPMyAdmin</category>
-      
-      
-      <comments>https://jehwanyoo.net/2021/04/10/mac-NGINX-Tutorial-4-PHPMyAdmin-%EC%84%A4%EC%B9%98/#disqus_thread</comments>
       
     </item>
     

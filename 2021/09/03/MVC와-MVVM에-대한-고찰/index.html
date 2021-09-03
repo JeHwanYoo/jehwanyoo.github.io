@@ -15,19 +15,21 @@
 <meta name="description" content="프로그래밍 노트, 팁, 강의등을 게시하는 블로그입니다." />
  
 <meta name="keywords" content="Programming, C, C++, Java, JavaScript, Node.js, Python, Rust, Go, ETC..." />
- <meta name="description" content="링크: https:&#x2F;&#x2F;programmers.co.kr&#x2F;learn&#x2F;courses&#x2F;30&#x2F;lessons&#x2F;84512 문제 설명사전에 알파벳 모음 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 “A”이고, 그다음은 “AA”이며, 마지막 단어는 “UUUUU”입니다. 단어">
+ <meta name="description" content="개요MVC와 MVVM에 대해 고찰을 해보자. MVCModel, View, Controller로 이루어진 디자인 패턴이다. Controller에서 모든 Action을 처리하고 View, Controller에 Command를 날린다. 이렇게 되면 하나의 컨트롤러가 다수의 View와 Model을 처리하게 된다. MVVMModel, View, ViewModel로">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[프로그래머스 위클리 챌린지 5주차] 모음 사전1">
-<meta property="og:url" content="https://jehwanyoo.net/2021/08/30/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9C%84%ED%81%B4%EB%A6%AC-%EC%B1%8C%EB%A6%B0%EC%A7%80-5%EC%A3%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84/index.html">
+<meta property="og:title" content="MVC와 MVVM에 대한 고찰">
+<meta property="og:url" content="https://jehwanyoo.net/2021/09/03/MVC%EC%99%80-MVVM%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/index.html">
 <meta property="og:site_name" content="JeHwan PL Note">
-<meta property="og:description" content="링크: https:&#x2F;&#x2F;programmers.co.kr&#x2F;learn&#x2F;courses&#x2F;30&#x2F;lessons&#x2F;84512 문제 설명사전에 알파벳 모음 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 “A”이고, 그다음은 “AA”이며, 마지막 단어는 “UUUUU”입니다. 단어">
+<meta property="og:description" content="개요MVC와 MVVM에 대해 고찰을 해보자. MVCModel, View, Controller로 이루어진 디자인 패턴이다. Controller에서 모든 Action을 처리하고 View, Controller에 Command를 날린다. 이렇게 되면 하나의 컨트롤러가 다수의 View와 Model을 처리하게 된다. MVVMModel, View, ViewModel로">
 <meta property="og:locale" content="ko_KR">
-<meta property="article:published_time" content="2021-08-30T09:56:30.000Z">
-<meta property="article:modified_time" content="2021-08-30T10:13:50.952Z">
+<meta property="article:published_time" content="2021-09-03T08:20:24.000Z">
+<meta property="article:modified_time" content="2021-09-03T08:22:01.991Z">
 <meta property="article:author" content="JeHwanYoo">
-<meta property="article:tag" content="Algorithms">
-<meta name="twitter:card" content="summary"> <link rel="canonical" href="https://jehwanyoo.net/2021/08/30/프로그래머스-위클리-챌린지-5주차-모음-사전/"/> 
-<title>[프로그래머스 위클리 챌린지 5주차] 모음 사전1 | JeHwan PL Note</title>
+<meta property="article:tag" content="Design Pattern">
+<meta property="article:tag" content="MVC">
+<meta property="article:tag" content="MVVM">
+<meta name="twitter:card" content="summary"> <link rel="canonical" href="https://jehwanyoo.net/2021/09/03/mvc와-mvvm에-대한-고찰/"/> 
+<title>MVC와 MVVM에 대한 고찰 | JeHwan PL Note</title>
 
  
 <link rel="icon" href="/favicon.ico" />
@@ -178,7 +180,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">[프로그래머스 위클리 챌린지 5주차] 모음 사전1</h1>
+            <h1 class="post-title">MVC와 MVVM에 대한 고찰</h1>
             
                 <div class="post-meta">
                     
@@ -187,14 +189,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">8월 30, 2021&nbsp;&nbsp;18:56:30</a>
+                        Date: <a href="#">9월 3, 2021&nbsp;&nbsp;17:20:24</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Algorithms/">Algorithms</a>
+                                <a href="/categories/Design-Pattern/">Design Pattern</a>
                             
                         </span>
                     
@@ -203,17 +205,25 @@
         </header>
 
         <div class="post-content">
-            <p>링크: <a target="_blank" rel="noopener" href="https://programmers.co.kr/learn/courses/30/lessons/84512">https://programmers.co.kr/learn/courses/30/lessons/84512</a></p>
-<h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><p>사전에 알파벳 모음 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 “A”이고, 그다음은 “AA”이며, 마지막 단어는 “UUUUU”입니다.</p>
-<p>단어 하나 word가 매개변수로 주어질 때, 이 단어가 사전에서 몇 번째 단어인지 return 하도록 solution 함수를 완성해주세요.</p>
-<h2 id="제한사항"><a href="#제한사항" class="headerlink" title="제한사항"></a>제한사항</h2><p>word의 길이는 1 이상 5 이하입니다.<br>word는 알파벳 대문자 ‘A’, ‘E’, ‘I’, ‘O’, ‘U’로만 이루어져 있습니다.</p>
-<h2 id="아이디어"><a href="#아이디어" class="headerlink" title="아이디어"></a>아이디어</h2><p>이 문제를 보고나서 분명 수학적 관계가 있을거라고는 생각했다.</p>
-<p>하지만 그 규칙을 찾는것이 어려웠기 때문에 완전 탐색으로 풀기로 했다.</p>
-<h2 id="풀이"><a href="#풀이" class="headerlink" title="풀이"></a>풀이</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> alphabet = [<span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;E&#x27;</span>, <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;O&#x27;</span>, <span class="string">&#x27;U&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> wordIndex = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">let</span> wordLength = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> index = <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> concat = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">findWord</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (wordIndex[<span class="number">0</span>] !== <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (wordLength === <span class="number">5</span>) &#123;</span><br><span class="line">      <span class="keyword">while</span> (wordIndex[wordLength] === <span class="number">4</span>) &#123;</span><br><span class="line">        wordIndex[wordLength] = <span class="number">0</span></span><br><span class="line">        wordLength--</span><br><span class="line">        concat.pop()</span><br><span class="line">      &#125;</span><br><span class="line">      wordIndex[wordLength]++</span><br><span class="line">      concat.pop()</span><br><span class="line">      concat.push(alphabet[wordIndex[wordLength]])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      concat.push(alphabet[wordIndex[++wordLength]])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (concat.join(<span class="string">&#x27;&#x27;</span>) === findWord) &#123;</span><br><span class="line">      <span class="keyword">return</span> index</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      index++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">solution</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> find(word)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>그냥 A, AA, AAA, …, UUUUU 까지 전부 대조해보는 방식이다.</p>
-<p>경우의 수가 얼마 없기 때문에 시간 복잡도는 크지 않다.</p>
-<p>다른 사람의 풀이를 확인해보니 역시 수식으로 풀 수 있는 방법이 있더라…</p>
+            <h2 id="개요"><a href="#개요" class="headerlink" title="개요"></a>개요</h2><p>MVC와 MVVM에 대해 고찰을 해보자.</p>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>Model, View, Controller로 이루어진 디자인 패턴이다.</p>
+<p>Controller에서 모든 Action을 처리하고 View, Controller에 Command를 날린다.</p>
+<p>이렇게 되면 하나의 컨트롤러가 다수의 View와 Model을 처리하게 된다.</p>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>Model, View, ViewModel로 이루어진 디자인 패턴이다.</p>
+<p>View에서 Action을 처리하고 ViewModel로 Command를 날린다.</p>
+<p>View는 ViewModel의 Data에 Binding을 한다.</p>
+<p>이때, 1-way binding 또는 2-way binding을 선택할 수 있다.</p>
+<p>ViewModel은 Command를 받았을 때 Model과 통신하여 Data를 갱신한다.</p>
+<p>관찰자(Observer)인 View는 ViewModel로 부터 갱신에 대한 Notify를 받는다. (Observer Pattern)</p>
+<h2 id="웹-프론트엔드는-태생적으로-MVVM-패턴이-적합하다"><a href="#웹-프론트엔드는-태생적으로-MVVM-패턴이-적합하다" class="headerlink" title="웹 프론트엔드는 태생적으로 MVVM 패턴이 적합하다"></a>웹 프론트엔드는 태생적으로 MVVM 패턴이 적합하다</h2><p>우선 프론트라는 영역은 사용자(User)가 직접적으로 맞닿는 곳이다.</p>
+<p>따라서, 보통 GUI를 통해 다양한 이벤트를 처리하게 된다.</p>
+<p>이때 GUI 요소는 Action을 처리하는 부분이라 볼 수 있는데,</p>
+<p>이를 Controller가 아닌 View의 관점으로 생각해야 자연스럽다.</p>
+<p>JavaScript의 경우 비동기 처리가 강점이 아닌가?</p>
+<p>옵저버 패턴을 구현하기에 매우 적합한 언어다.</p>
+<h2 id="MVC는-어디에"><a href="#MVC는-어디에" class="headerlink" title="MVC는 어디에?"></a>MVC는 어디에?</h2><p>Node.js의 express 같은 mvc 프레임워크를 생각해보자.</p>
+<p>우선 클라이언트(유저) 입장에서 서버에 접속할 때 GUI를 사용하지 않는다.</p>
+<p>이때 클라이언트가 맞닿는 부분을 Controller로 해석하는 것이 올바르다.</p>
 
         </div>
 
@@ -242,7 +252,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Algorithms/"># Algorithms</a>
+                        <a href="/tags/Design-Pattern/"># Design Pattern</a>
+                    
+                        <a href="/tags/MVC/"># MVC</a>
+                    
+                        <a href="/tags/MVVM/"># MVVM</a>
                     
                         
                 </span>
@@ -255,10 +269,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/09/03/MVC%EC%99%80-MVVM%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0/">MVC와 MVVM에 대한 고찰</a>
             
-            
-            <a class="next" rel="next" href="/2021/07/16/Ubuntu-Node-js-%EC%84%A4%EC%B9%98%ED%95%98%EA%B3%A0-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0-n-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98%EA%B9%8C%EC%A7%80/">[Ubuntu] Node js 설치하고 관리하기 (n 모듈 설치까지)</a>
+            <a class="next" rel="next" href="/2021/08/30/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9C%84%ED%81%B4%EB%A6%AC-%EC%B1%8C%EB%A6%B0%EC%A7%80-5%EC%A3%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84/">[프로그래머스 위클리 챌린지 5주차] 모음 사전1</a>
             
         </section>
         <section style="margin-top: 4rem;">
